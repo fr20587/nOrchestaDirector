@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 // Module
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './apis/product/product.module';
+import { UsersModule } from './apis/users/users.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { ProductModule } from './apis/product/product.module';
       useFindAndModify: true,
     }),
     ProductModule,
+    UsersModule,
   ],
   controllers: [
     AppController
