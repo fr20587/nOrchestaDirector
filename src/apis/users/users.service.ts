@@ -1,26 +1,70 @@
+// NestJS Modules
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+
+// Mongoose Module
+import { Model } from 'mongoose';
+
+// DTO
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+// Entity
+import { User } from './entities/user.entity';
+
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+
+  // Crear usuario
+  public async create(createUserDto: CreateUserDto) {
+    const existUser = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+    if (existUser) {
+      return 'Correo Electrónico no válido, el usuario ya existe';
+    }
+
+    const user = new this.userModel(createUserDto);
+    await user.save();
+    return user;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  // Obtener todos los usuarios
+  public async findAll(): Promise<User[]> {
+    const users = await this.userModel.find();
+    return users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // Obtener un usuario
+  public async findOne(id: string): Promise<User> {
+    const user = await this.userModel.findById(id);
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  // Actualizar usuario
+  public async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userModel.findById(id);
+    if (user.email !== updateUserDto.email) {
+      const existUser = await this.userModel.findOne({
+        email: updateUserDto.email,
+      });
+      if (existUser) {
+        return 'Correo Electrónico no válido, el usuario ya existe';
+      }
+    }
+
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
+      updateUserDto,
+      { new: true },
+    );
+    return updatedUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  // Eliminar usuario
+  public async remove(id: string) {
+    await this.userModel.findByIdAndDelete(id);
+    return 'Usuario eliminado correctamente';
   }
 }

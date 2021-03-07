@@ -17,7 +17,7 @@ async function bootstrap() {
 
   app.enableCors();
 
-  app.use(csurf());
+  //app.use(csurf());
   app.use(helmet());
   app.use(
     rateLimit({
@@ -25,7 +25,6 @@ async function bootstrap() {
       max: 100, // limit each IP to 100 requests per windowMs
     }),
   );
-
 
   const config = new DocumentBuilder()
     .setTitle('n-OrchestaDirector')
@@ -38,6 +37,10 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
-  console.log('ATHENDAT | n-OrchestaDirector is running on port:', port, 'Enjoy the music :)!');
+  console.log(
+    'ATHENDAT | n-OrchestaDirector is running on port:',
+    port,
+    'Enjoy the music :)!',
+  );
 }
 bootstrap();

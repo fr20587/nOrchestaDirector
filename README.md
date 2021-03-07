@@ -64,9 +64,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Frank Rodriguez Lopez](https://www.linkedin.com/fr20587)
+- Author - [Frank Rodriguez Lopez](https://www.linkedin.com/in/fr20587)
 - Website - [https://athendat.github.io](https://athendat.github.io)
-- Twitter - [@nestframework](https://twitter.com/athendat)
+- Twitter - [@athendat](https://twitter.com/athendat)
 
 ## License
 
