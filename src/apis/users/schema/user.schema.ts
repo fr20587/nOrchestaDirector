@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 export const UserSchema = new Schema(
   {
@@ -43,4 +43,3 @@ UserSchema.statics.encryptPassword = async (password) => {
 UserSchema.statics.comparePassword = async (password, receivedPassword) => {
   return await bcrypt.compare(password, receivedPassword);
 };
-

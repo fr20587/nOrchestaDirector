@@ -2,6 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
+import * as bcrypt from 'bcrypt';
+
 // Mongoose Module
 import { Model } from 'mongoose';
 
@@ -25,7 +27,11 @@ export class UsersService {
       return 'Correo Electrónico no válido, el usuario ya existe';
     }
 
-    const user = new this.userModel(createUserDto);
+    const salt = await bcrypt.genSalt(13);
+    const user = new this.userModel({
+      ...createUserDto,
+      password: await bcrypt.hash(createUserDto.password, salt),
+    });
     await user.save();
     return user;
   }

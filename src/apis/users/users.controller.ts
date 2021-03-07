@@ -18,7 +18,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   // Crear usuario
-  //! TODO: Realizar cifrado de la contraseña
   @Post('/')
   public async create(@Res() res, @Body() createUserDto: CreateUserDto) {
     try {
