@@ -1,3 +1,4 @@
+// Nest Modules
 import {
   Controller,
   Get,
@@ -9,7 +10,11 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
+
+// Service
 import { UsersService } from './users.service';
+
+// DTO
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
