@@ -1,5 +1,6 @@
 // NestJS Module
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
 // Controller
 import { AppController } from './app.controller';
@@ -8,11 +9,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 // Modules
-import { MongooseModule } from '@nestjs/mongoose';
-import { ProductModule } from './apis/product/product.module';
-import { UsersModule } from './apis/users/users.module';
+import { AuthModule } from './apis/auth/auth.module';
 import { CategoryModule } from './apis/category/category.module';
 import { CityModule } from './apis/city/city.module';
+import { ProductModule } from './apis/product/product.module';
+import { UsersModule } from './apis/users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CityModule } from './apis/city/city.module';
     UsersModule,
     CategoryModule,
     CityModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

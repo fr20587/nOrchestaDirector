@@ -2,6 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
+// Thid's Module
 import * as bcrypt from 'bcrypt';
 
 // Mongoose Module
@@ -42,11 +43,17 @@ export class UsersService {
     return users;
   }
 
-  // Obtener un usuario
+  // Obtener un usuario por id
   public async findOne(id: string): Promise<User> {
     const user = await this.userModel.findById(id);
     return user;
   }
+
+  // Obtener un usuario por el correo
+  /* public async findByEmail(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email });
+    return user;
+  } */
 
   // Actualizar usuario
   public async update(id: string, updateUserDto: UpdateUserDto) {

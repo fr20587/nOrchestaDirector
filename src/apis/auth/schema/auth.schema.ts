@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
-export const UserSchema = new Schema(
+export const AuthSchema = new Schema(
   {
     user: { ref: 'User', type: Schema.Types.ObjectId },
     email: {
@@ -12,7 +12,6 @@ export const UserSchema = new Schema(
       maxlength: 20,
     },
     password: { type: String, required: true, minlength: 8 },
-    salt: { type: String },
     name: { type: String, required: false, maxlength: 20 },
     lastName: { type: String, required: false, maxlength: 20 },
     roles: [{ type: String }],
@@ -36,11 +35,11 @@ export const UserSchema = new Schema(
   },
 );
 
-UserSchema.statics.encryptPassword = async (password) => {
+AuthSchema.statics.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(13);
   return await bcrypt.hash(password, salt);
 };
 
-UserSchema.methods.comparePassword = async (password, receivedPassword) => {
+AuthSchema.methods.comparePassword = async (password, receivedPassword) => {
   return await bcrypt.compare(password, receivedPassword);
 };

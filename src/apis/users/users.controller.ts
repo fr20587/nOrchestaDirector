@@ -32,13 +32,13 @@ export class UsersController {
           ok: false,
           user,
         });
+      } else {
+        return res.status(HttpStatus.CREATED).json({
+          ok: true,
+          message: 'Usuario creado correctamente',
+          user,
+        });
       }
-
-      return res.status(HttpStatus.CREATED).json({
-        ok: true,
-        message: 'Usuario creado correctamente',
-        user,
-      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
