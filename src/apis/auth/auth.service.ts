@@ -1,10 +1,5 @@
 // Nest Module
-import {
-  HttpStatus,
-  Injectable,
-  Res,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 
@@ -27,11 +22,13 @@ export class AuthService {
   constructor(
     @InjectModel('Auth') private readonly authModel: Model<Auth>,
     @InjectModel('User') private readonly userModel: Model<User>,
-    private jwtService: JwtService,
+    private _jwtService: JwtService,
   ) {}
 
   // Registro de usuario
-  public async signUpUser(authSignUpDto: AuthSignUpDto) {
+  public async signUpUser(
+    authSignUpDto: AuthSignUpDto,
+  ): Promise<User | string | void> {
     const user = await this.userModel.findOne({
       email: authSignUpDto.email,
     });
@@ -41,16 +38,22 @@ export class AuthService {
     const salt = await bcrypt.genSalt(13);
     const newUser = new this.userModel({
       ...authSignUpDto,
+      //roles: ['USER_ROLE'],
       salt,
       password: await bcrypt.hash(authSignUpDto.password, salt),
     });
+
+    // Asignar el rol user por defecto a los usuarios
+    //newUser.roles = ['USER_ROLE'];
 
     await newUser.save();
     return newUser;
   }
 
   // Inicio de sesión de usuario
-  public async signInUser(authSignInDto: AuthSignInDto) {
+  public async signInUser(
+    authSignInDto: AuthSignInDto,
+  ): Promise<string | void> {
     const user = await this.userModel.findOne({
       email: authSignInDto.email,
     });
@@ -67,7 +70,7 @@ export class AuthService {
       return 'Credenciales Invalidas';
       // throw new UnauthorizedException('Credenciales Invalidas');
     } else {
-      return await this.jwtService.sign({ id: user.id });
+      return await this._jwtService.sign({ id: user.id });
     }
   }
 }

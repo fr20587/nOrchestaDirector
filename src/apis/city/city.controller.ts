@@ -1,3 +1,4 @@
+// Nest Modules
 import {
   Controller,
   Get,
@@ -9,11 +10,15 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
+
+// Service
 import { CityService } from './city.service';
+
+// DTO
 import { CreateCityDto } from './dto/create-city.dto';
 import { UpdateCityDto } from './dto/update-city.dto';
 
-@Controller('api/city')
+@Controller('city')
 export class CityController {
   constructor(private readonly cityService: CityService) {}
 
@@ -43,7 +48,7 @@ export class CityController {
     }
   }
 
-  // Obtener municipios
+  // Obtener todos los municipios
   @Get('/')
   public async findAll(@Res() res) {
     try {

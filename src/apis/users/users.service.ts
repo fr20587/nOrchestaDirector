@@ -56,7 +56,7 @@ export class UsersService {
   } */
 
   // Actualizar usuario
-  public async update(id: string, updateUserDto: UpdateUserDto) {
+  /*   public async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userModel.findById(id);
     if (user.email !== updateUserDto.email) {
       const existUser = await this.userModel.findOne({
@@ -73,7 +73,7 @@ export class UsersService {
       { new: true },
     );
     return updatedUser;
-  }
+  } */
 
   // Eliminar usuario
   public async remove(id: string) {

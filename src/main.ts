@@ -11,10 +11,9 @@ import * as rateLimit from 'express-rate-limit';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const port = process.env.PORT || 3000;
-
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
   app.enableCors();
 
   //app.use(csurf());
@@ -36,10 +35,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(port);
+  await app.listen(AppModule.port);
   console.log(
     'ATHENDAT | n-OrchestaDirector is running on port:',
-    port,
+    AppModule.port,
     'Enjoy the music :)!',
   );
 }

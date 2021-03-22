@@ -6,16 +6,20 @@ import {
   Res,
   ValidationPipe,
   HttpStatus,
+  Get,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 // Service
 import { AuthService } from './auth.service';
+import { GetUser } from './decorators/user.decorator';
 
 // DTO
 import { AuthSignInDto } from './dto/auth-sign-in.dto';
 import { AuthSignUpDto } from './dto/auth-sign-up.dto';
 
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -52,7 +56,7 @@ export class AuthController {
   @Post('/signInUser')
   public async signInUser(
     @Res() res,
-    @Body(ValidationPipe) authSignInDto: AuthSignUpDto,
+    @Body(ValidationPipe) authSignInDto: AuthSignInDto,
   ) {
     try {
       const response = await this.authService.signInUser(authSignInDto);
@@ -67,11 +71,14 @@ export class AuthController {
           message: 'Credenciales Invalidas',
         });
       } else if (response) {
-        return res.status(HttpStatus.ACCEPTED).json({
-          ok: true,
-          message: 'Ha iniciado sesión correctamente',
-          token: response,
-        });
+        return res
+          .status(HttpStatus.ACCEPTED)
+          .header('x-token', response)
+          .json({
+            ok: true,
+            message: 'Ha iniciado sesión correctamente',
+            token: response,
+          });
       }
     } catch (error) {
       console.log(error);

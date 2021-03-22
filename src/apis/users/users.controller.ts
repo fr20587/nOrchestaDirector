@@ -18,7 +18,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('api/user')
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -92,7 +92,7 @@ export class UsersController {
 
   // Actualizar usuario
   @Put('/:id')
-  public async update(
+  /* public async update(
     @Res() res,
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -127,7 +127,7 @@ export class UsersController {
         message: 'Error inesperado.',
       });
     }
-  }
+  } */
 
   // Eliminar usuario
   @Delete(':id')

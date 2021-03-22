@@ -4,7 +4,7 @@ import {
   Get,
   Post,
   Body,
-  Put,
+  Patch,
   Param,
   Delete,
   Res,
@@ -12,34 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { CategoryService } from './category.service';
+import { ProjectService } from './project.service';
 
 // DTO
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
-@Controller('category')
-export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+@Controller('project')
+export class ProjectController {
+  constructor(private readonly projectService: ProjectService) {}
 
-  // Crear categoría
+  // Crear proyecto
   @Post('/')
-  public async create(
-    @Res() res,
-    @Body() createCategoryDto: CreateCategoryDto,
-  ) {
+  public async create(@Res() res, @Body() createProjectDto: CreateProjectDto) {
     try {
-      const category = await this.categoryService.create(createCategoryDto);
-      if (category === 'Ya existe una categoría con este nombre') {
+      const project = await this.projectService.create(createProjectDto);
+      if (project === 'Ya existe un proyecto con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          category,
+          project,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Categoría creada correctamente',
-          category,
+          message: 'Empresa creada correctamente',
+          project,
         });
       }
     } catch (error) {
@@ -51,14 +48,14 @@ export class CategoryController {
     }
   }
 
-  // Obtener categorías
+  // Obtener todos los proyectos
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const catgories = await this.categoryService.findAll();
+      const projects = await this.projectService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        catgories,
+        projects,
       });
     } catch (error) {
       console.log(error);
@@ -69,20 +66,20 @@ export class CategoryController {
     }
   }
 
-  // Obtener una categoría
+  // Obtener un proyecto
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const category = await this.categoryService.findOne(id);
-      if (!category) {
+      const projects = await this.projectService.findOne(id);
+      if (!projects) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoría no existe',
+          message: 'El proyecto no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          category,
+          projects,
         });
       }
     } catch (error) {
@@ -94,29 +91,29 @@ export class CategoryController {
     }
   }
 
-  // Actualizar categoría
-  @Put(':id')
+  // Actualizar proyecto
+  @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateCategoryDto: UpdateCategoryDto,
+    @Body() updateProjectDto: UpdateProjectDto,
   ) {
     try {
-      const updatedCategory = await this.categoryService.update(
+      const updatedProject = await this.projectService.update(
         id,
-        updateCategoryDto,
+        updateProjectDto,
       );
 
-      if (!updatedCategory) {
+      if (!updatedProject) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoría no existe',
+          message: 'EL municipio no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Categoría actualizada correctamente',
-          updatedCategory,
+          message: 'Municipio actualizado correctamente',
+          updatedProject,
         });
       }
     } catch (error) {
@@ -128,20 +125,20 @@ export class CategoryController {
     }
   }
 
-  // Eliminar categoría
+  // Eliminar proyecto
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteCategory = await this.categoryService.remove(id);
-      if (!responseDeleteCategory) {
+      const responseDeleteProject = await this.projectService.remove(id);
+      if (!responseDeleteProject) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoria no existe',
+          message: 'La empresa no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteCategory,
+          responseDeleteProject,
         });
       }
     } catch (error) {

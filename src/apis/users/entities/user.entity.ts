@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 export class User extends Document {
   readonly user: string;
-  readonly roles: string;
+  readonly roles: string[];
   readonly name: string;
   readonly lastName: string;
   readonly password: string;

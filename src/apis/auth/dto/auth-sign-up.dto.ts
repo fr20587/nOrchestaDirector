@@ -9,6 +9,16 @@ import {
 
 export class AuthSignUpDto {
   @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(20)
+  name: string;
+
+  @IsNotEmpty()
+  @MinLength(3)
+  @MaxLength(20)
+  lastName: string;
+
+  @IsNotEmpty()
   @IsEmail()
   @MaxLength(20)
   email: string;

@@ -4,7 +4,7 @@ import {
   Get,
   Post,
   Body,
-  Put,
+  Patch,
   Param,
   Delete,
   Res,
@@ -12,34 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { CategoryService } from './category.service';
+import { ContactsService } from './contacts.service';
 
 // DTO
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateContactDto } from './dto/create-contact.dto';
+import { UpdateContactDto } from './dto/update-contact.dto';
 
-@Controller('category')
-export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+@Controller('contacts')
+export class ContactsController {
+  constructor(private readonly contactsService: ContactsService) {}
 
-  // Crear categoría
+  // Crear contacto
   @Post('/')
-  public async create(
-    @Res() res,
-    @Body() createCategoryDto: CreateCategoryDto,
-  ) {
+  public async create(@Res() res, @Body() createContactDto: CreateContactDto) {
     try {
-      const category = await this.categoryService.create(createCategoryDto);
-      if (category === 'Ya existe una categoría con este nombre') {
+      const contact = await this.contactsService.create(createContactDto);
+      if (contact === 'Ya existe un contacto con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          category,
+          contact,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Categoría creada correctamente',
-          category,
+          message: 'Empresa creada correctamente',
+          contact,
         });
       }
     } catch (error) {
@@ -51,14 +48,14 @@ export class CategoryController {
     }
   }
 
-  // Obtener categorías
+  // Obtener todos los contactos
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const catgories = await this.categoryService.findAll();
+      const contacts = await this.contactsService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        catgories,
+        contacts,
       });
     } catch (error) {
       console.log(error);
@@ -69,20 +66,20 @@ export class CategoryController {
     }
   }
 
-  // Obtener una categoría
+  // Obtener un contacto
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const category = await this.categoryService.findOne(id);
-      if (!category) {
+      const contacts = await this.contactsService.findOne(id);
+      if (!contacts) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoría no existe',
+          message: 'La empresa no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          category,
+          contacts,
         });
       }
     } catch (error) {
@@ -94,29 +91,29 @@ export class CategoryController {
     }
   }
 
-  // Actualizar categoría
-  @Put(':id')
+  // Actualizar contacto
+  @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateCategoryDto: UpdateCategoryDto,
+    @Body() updateContactDto: UpdateContactDto,
   ) {
     try {
-      const updatedCategory = await this.categoryService.update(
+      const updatedContact = await this.contactsService.update(
         id,
-        updateCategoryDto,
+        updateContactDto,
       );
 
-      if (!updatedCategory) {
+      if (!updatedContact) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoría no existe',
+          message: 'EL contacto no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Categoría actualizada correctamente',
-          updatedCategory,
+          message: 'Contacto actualizado correctamente',
+          updatedContact,
         });
       }
     } catch (error) {
@@ -128,20 +125,20 @@ export class CategoryController {
     }
   }
 
-  // Eliminar categoría
+  // Eliminar contacto
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteCategory = await this.categoryService.remove(id);
-      if (!responseDeleteCategory) {
+      const responseDeleteContact = await this.contactsService.remove(id);
+      if (!responseDeleteContact) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La categoria no existe',
+          message: 'El contacto no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteCategory,
+          responseDeleteContact,
         });
       }
     } catch (error) {
