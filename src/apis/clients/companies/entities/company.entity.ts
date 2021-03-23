@@ -8,14 +8,14 @@ export class Company extends Document {
   readonly email: string;
   readonly webSite: string;
 
-  readonly RUEP: string;
+  readonly REUP: string;
   readonly NIT: string;
   readonly CUPCount: string;
   readonly recipientCUPCount: string;
-  readonly barnchOfficeCUPCount: string;
+  readonly branchOfficeCUPCount: string;
   readonly USDCount: string;
   readonly recipientUSDCount: string;
-  readonly barnchOfficeUSDCount: string;
+  readonly branchOfficeUSDCount: string;
 
   readonly address: string;
   readonly country: string;

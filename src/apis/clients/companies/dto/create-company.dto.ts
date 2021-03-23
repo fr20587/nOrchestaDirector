@@ -6,14 +6,14 @@ export class CreateCompanyDto {
   email: string;
   webSite: string;
 
-  RUEP: string;
+  REUP: string;
   NIT: string;
   CUPCount: string;
   recipientCUPCount: string;
-  barnchOfficeCUPCount: string;
+  branchOfficeCUPCount: string;
   USDCount: string;
   recipientUSDCount: string;
-  barnchOfficeUSDCount: string;
+  branchOfficeUSDCount: string;
 
   address: string;
   country: string;

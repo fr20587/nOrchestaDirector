@@ -4,7 +4,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Res,
@@ -92,7 +92,7 @@ export class ContactsController {
   }
 
   // Actualizar contacto
-  @Patch(':id')
+  @Put(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,

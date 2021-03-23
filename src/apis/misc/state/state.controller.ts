@@ -12,31 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { ProjectService } from './project.service';
+import { StateService } from './state.service';
 
 // DTO
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { CreateStateDto } from './dto/create-state.dto';
+import { UpdateStateDto } from './dto/update-state.dto';
 
-@Controller('project')
-export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+@Controller('state')
+export class StateController {
+  constructor(private readonly stateService: StateService) {}
 
-  // Crear proyecto
+  // Crear estado/municipio
   @Post('/')
-  public async create(@Res() res, @Body() createProjectDto: CreateProjectDto) {
+  public async create(@Res() res, @Body() createStateDto: CreateStateDto) {
     try {
-      const project = await this.projectService.create(createProjectDto);
-      if (project === 'Ya existe un proyecto con este nombre') {
+      const state = await this.stateService.create(createStateDto);
+      if (state === 'Ya existe un estado/municipio con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          project,
+          state,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Empresa creada correctamente',
-          project,
+          message: 'Estado/Municipio creado correctamente',
+          state,
         });
       }
     } catch (error) {
@@ -48,14 +48,14 @@ export class ProjectController {
     }
   }
 
-  // Obtener todos los proyectos
+  // Obtener todos los estados/municipios
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const projects = await this.projectService.findAll();
+      const states = await this.stateService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        projects,
+        states,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +66,20 @@ export class ProjectController {
     }
   }
 
-  // Obtener un proyecto
+  // Obtener todos un estado/municipio
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const projects = await this.projectService.findOne(id);
-      if (!projects) {
+      const state = await this.stateService.findOne(id);
+      if (!state) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El proyecto no existe',
+          message: 'El estado/municipio no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          projects,
+          state,
         });
       }
     } catch (error) {
@@ -91,29 +91,26 @@ export class ProjectController {
     }
   }
 
-  // Actualizar proyecto
+  // Actualizar estado/municipio
   @Put(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateProjectDto: UpdateProjectDto,
+    @Body() updateStateDto: UpdateStateDto,
   ) {
     try {
-      const updatedProject = await this.projectService.update(
-        id,
-        updateProjectDto,
-      );
+      const updatedState = await this.stateService.update(id, updateStateDto);
 
-      if (!updatedProject) {
+      if (!updatedState) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL municipio no existe',
+          message: 'EL estado/municipio no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Municipio actualizado correctamente',
-          updatedProject,
+          message: 'Estado/Municipio actualizado correctamente',
+          updatedState,
         });
       }
     } catch (error) {
@@ -125,20 +122,20 @@ export class ProjectController {
     }
   }
 
-  // Eliminar proyecto
+  // Eliminar estado/municipio
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteProject = await this.projectService.remove(id);
-      if (!responseDeleteProject) {
+      const responseDeleteState = await this.stateService.remove(id);
+      if (!responseDeleteState) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La empresa no existe',
+          message: 'El estado/municipio no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteProject,
+          responseDeleteState,
         });
       }
     } catch (error) {

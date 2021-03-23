@@ -4,39 +4,39 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
   Delete,
   Res,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 
 // Service
-import { ProjectService } from './project.service';
+import { CountryService } from './country.service';
 
 // DTO
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { CreateCountryDto } from './dto/create-country.dto';
+import { UpdateCountryDto } from './dto/update-country.dto';
 
-@Controller('project')
-export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+@Controller('country')
+export class CountryController {
+  constructor(private readonly countryService: CountryService) {}
 
-  // Crear proyecto
+  // Crear país
   @Post('/')
-  public async create(@Res() res, @Body() createProjectDto: CreateProjectDto) {
+  public async create(@Res() res, @Body() createCountryDto: CreateCountryDto) {
     try {
-      const project = await this.projectService.create(createProjectDto);
-      if (project === 'Ya existe un proyecto con este nombre') {
+      const country = await this.countryService.create(createCountryDto);
+      if (country === 'Ya existe un país con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          project,
+          country,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Empresa creada correctamente',
-          project,
+          message: 'País creado correctamente',
+          country,
         });
       }
     } catch (error) {
@@ -48,14 +48,14 @@ export class ProjectController {
     }
   }
 
-  // Obtener todos los proyectos
+  // Obtener todos los paises
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const projects = await this.projectService.findAll();
+      const countries = await this.countryService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        projects,
+        countries,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +66,20 @@ export class ProjectController {
     }
   }
 
-  // Obtener un proyecto
+  // Obtener un país
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const projects = await this.projectService.findOne(id);
-      if (!projects) {
+      const country = await this.countryService.findOne(id);
+      if (!country) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El proyecto no existe',
+          message: 'El país no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          projects,
+          country,
         });
       }
     } catch (error) {
@@ -91,29 +91,29 @@ export class ProjectController {
     }
   }
 
-  // Actualizar proyecto
+  // Actualizar país
   @Put(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateProjectDto: UpdateProjectDto,
+    @Body() updateCountryDto: UpdateCountryDto,
   ) {
     try {
-      const updatedProject = await this.projectService.update(
+      const updatedCountry = await this.countryService.update(
         id,
-        updateProjectDto,
+        updateCountryDto,
       );
 
-      if (!updatedProject) {
+      if (!updatedCountry) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL municipio no existe',
+          message: 'EL país no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Municipio actualizado correctamente',
-          updatedProject,
+          message: 'País actualizado correctamente',
+          updatedCountry,
         });
       }
     } catch (error) {
@@ -125,20 +125,20 @@ export class ProjectController {
     }
   }
 
-  // Eliminar proyecto
+  // Eliminar país
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteProject = await this.projectService.remove(id);
-      if (!responseDeleteProject) {
+      const responseDeleteCountry = await this.countryService.remove(id);
+      if (!responseDeleteCountry) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La empresa no existe',
+          message: 'El país no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteProject,
+          responseDeleteCountry,
         });
       }
     } catch (error) {

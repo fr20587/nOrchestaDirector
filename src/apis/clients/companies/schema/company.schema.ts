@@ -10,14 +10,14 @@ export const CompanySchema = new Schema(
     email: { type: String },
     webSite: { type: String },
 
-    RUEP: { type: String },
+    REUP: { type: String },
     NIT: { type: String },
     CUPCount: { type: String },
     recipientCUPCount: { type: String },
-    barnchOfficeCUPCount: { type: String },
+    branchOfficeCUPCount: { type: String },
     USDCount: { type: String },
     recipientUSDCount: { type: String },
-    barnchOfficeUSDCount: { type: String },
+    branchOfficeUSDCount: { type: String },
 
     address: { type: String },
     country: { ref: 'Company', type: Schema.Types.ObjectId },

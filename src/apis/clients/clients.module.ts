@@ -7,6 +7,6 @@ import { ContactsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [CompaniesModule, ContactsModule],
-  exports: [CompaniesModule, ContactsModule]
+  exports: [CompaniesModule, ContactsModule],
 })
 export class ClientsModule {}
