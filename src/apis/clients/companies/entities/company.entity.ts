@@ -32,4 +32,5 @@ export class Company extends Document {
 
   readonly logo: string;
   readonly logoUrl: string;
+  readonly review: string;
 }

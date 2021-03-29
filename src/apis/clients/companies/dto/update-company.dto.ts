@@ -33,4 +33,5 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
 
   logo: string;
   logoUrl: string;
+  review: string;
 }

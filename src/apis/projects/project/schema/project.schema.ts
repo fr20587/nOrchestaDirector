@@ -13,6 +13,7 @@ export const ProjectSchema = new Schema(
     person: { ref: 'User', type: Schema.Types.ObjectId },
   },
   {
+    timestamps: true,
     versionKey: false,
   },
 );

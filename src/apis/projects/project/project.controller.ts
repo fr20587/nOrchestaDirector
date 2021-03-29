@@ -70,8 +70,8 @@ export class ProjectController {
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const projects = await this.projectService.findOne(id);
-      if (!projects) {
+      const project = await this.projectService.findOne(id);
+      if (!project) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
           message: 'El proyecto no existe',
@@ -79,7 +79,7 @@ export class ProjectController {
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          projects,
+          project,
         });
       }
     } catch (error) {

@@ -12,31 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { ContactsService } from './contacts.service';
+import { GenderService } from './gender.service';
 
 // DTO
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
+import { CreateGenderDto } from './dto/create-gender.dto';
+import { UpdateGenderDto } from './dto/update-gender.dto';
 
-@Controller('contacts')
-export class ContactsController {
-  constructor(private readonly contactsService: ContactsService) {}
+@Controller('gender')
+export class GenderController {
+  constructor(private readonly genderService: GenderService) {}
 
-  // Crear contacto
+  // Crear género
   @Post('/')
-  public async create(@Res() res, @Body() createContactDto: CreateContactDto) {
+  public async create(@Res() res, @Body() createGenderDto: CreateGenderDto) {
     try {
-      const contact = await this.contactsService.create(createContactDto);
-      if (contact === 'Ya existe un contacto con este nombre y correo') {
+      const gender = await this.genderService.create(createGenderDto);
+      if (gender === 'Ya existe un género con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          contact,
+          gender,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Empresa creada correctamente',
-          contact,
+          message: 'País creado correctamente',
+          gender,
         });
       }
     } catch (error) {
@@ -48,14 +48,14 @@ export class ContactsController {
     }
   }
 
-  // Obtener todos los contactos
+  // Obtener todos los géneros
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const contacts = await this.contactsService.findAll();
+      const genders = await this.genderService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        contacts,
+        genders,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +66,20 @@ export class ContactsController {
     }
   }
 
-  // Obtener un contacto
+  // Obtener un género
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const contacts = await this.contactsService.findOne(id);
-      if (!contacts) {
+      const gender = await this.genderService.findOne(id);
+      if (!gender) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La empresa no existe',
+          message: 'El género no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          contacts,
+          gender,
         });
       }
     } catch (error) {
@@ -91,29 +91,29 @@ export class ContactsController {
     }
   }
 
-  // Actualizar contacto
+  // Actualizar un género
   @Put(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateContactDto: UpdateContactDto,
+    @Body() updateGenderDto: UpdateGenderDto,
   ) {
     try {
-      const updatedContact = await this.contactsService.update(
+      const updatedGender = await this.genderService.update(
         id,
-        updateContactDto,
+        updateGenderDto,
       );
 
-      if (!updatedContact) {
+      if (!updatedGender) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL contacto no existe',
+          message: 'EL género no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Contacto actualizado correctamente',
-          updatedContact,
+          message: 'Género actualizado correctamente',
+          updatedGender,
         });
       }
     } catch (error) {
@@ -125,20 +125,20 @@ export class ContactsController {
     }
   }
 
-  // Eliminar contacto
+  // Eliminar un género
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteContact = await this.contactsService.remove(id);
-      if (!responseDeleteContact) {
+      const responseDeleteGender = await this.genderService.remove(id);
+      if (!responseDeleteGender) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El contacto no existe',
+          message: 'El género no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteContact,
+          responseDeleteGender,
         });
       }
     } catch (error) {

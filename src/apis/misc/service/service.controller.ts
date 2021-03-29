@@ -12,31 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { ContactsService } from './contacts.service';
+import { ServiceService } from './service.service';
 
 // DTO
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
+import { CreateServiceDto } from './dto/create-service.dto';
+import { UpdateServiceDto } from './dto/update-service.dto';
 
-@Controller('contacts')
-export class ContactsController {
-  constructor(private readonly contactsService: ContactsService) {}
+@Controller('service')
+export class ServiceController {
+  constructor(private readonly serviceService: ServiceService) {}
 
-  // Crear contacto
+  // Crear servicio
   @Post('/')
-  public async create(@Res() res, @Body() createContactDto: CreateContactDto) {
+  public async create(@Res() res, @Body() createServiceDto: CreateServiceDto) {
     try {
-      const contact = await this.contactsService.create(createContactDto);
-      if (contact === 'Ya existe un contacto con este nombre y correo') {
+      const service = await this.serviceService.create(createServiceDto);
+      if (service === 'Ya existe un servicio con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          contact,
+          service,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Empresa creada correctamente',
-          contact,
+          message: 'Servicio creado correctamente',
+          service,
         });
       }
     } catch (error) {
@@ -48,14 +48,14 @@ export class ContactsController {
     }
   }
 
-  // Obtener todos los contactos
+  // Obtener todos los servicios
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const contacts = await this.contactsService.findAll();
+      const services = await this.serviceService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        contacts,
+        services,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +66,20 @@ export class ContactsController {
     }
   }
 
-  // Obtener un contacto
+  // Obtener un servicio
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const contacts = await this.contactsService.findOne(id);
-      if (!contacts) {
+      const service = await this.serviceService.findOne(id);
+      if (!service) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'La empresa no existe',
+          message: 'El servicio no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          contacts,
+          service,
         });
       }
     } catch (error) {
@@ -91,29 +91,29 @@ export class ContactsController {
     }
   }
 
-  // Actualizar contacto
+  // Actualizar servicio
   @Put(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateContactDto: UpdateContactDto,
+    @Body() updateServiceDto: UpdateServiceDto,
   ) {
     try {
-      const updatedContact = await this.contactsService.update(
+      const updatedService = await this.serviceService.update(
         id,
-        updateContactDto,
+        updateServiceDto,
       );
 
-      if (!updatedContact) {
+      if (!updatedService) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL contacto no existe',
+          message: 'EL municipio no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Contacto actualizado correctamente',
-          updatedContact,
+          message: 'Municipio actualizado correctamente',
+          updatedService,
         });
       }
     } catch (error) {
@@ -125,20 +125,20 @@ export class ContactsController {
     }
   }
 
-  // Eliminar contacto
+  // Eliminar servicio
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteContact = await this.contactsService.remove(id);
-      if (!responseDeleteContact) {
+      const responseDeleteService = await this.serviceService.remove(id);
+      if (!responseDeleteService) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El contacto no existe',
+          message: 'El servicio no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteContact,
+          responseDeleteService,
         });
       }
     } catch (error) {

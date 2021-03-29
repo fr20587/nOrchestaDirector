@@ -34,6 +34,7 @@ export const CompanySchema = new Schema(
 
     logo: { type: String },
     logoUrl: { type: String },
+    review: { type: String },
   },
   {
     versionKey: false,

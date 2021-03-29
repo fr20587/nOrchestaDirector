@@ -20,6 +20,7 @@ import { MiscModule } from './apis/misc/misc.module';
 import { ProductModule } from './apis/product/product.module';
 import { ProjectsModule } from './apis/projects/projects.module';
 import { UsersModule } from './apis/users/users.module';
+import { Tbl6Module } from './apis/tables/tbl6/tbl6.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UsersModule } from './apis/users/users.module';
     ClientsModule,
     ProjectsModule,
     MiscModule,
+    Tbl6Module,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,12 +1,11 @@
 import { Schema } from 'mongoose';
 
-export const StateSchema = new Schema(
+export const GenderSchema = new Schema(
   {
     user: { ref: 'User', type: Schema.Types.ObjectId },
     name: { type: String },
   },
   {
-    timestamps: true,
     versionKey: false,
   },
 );

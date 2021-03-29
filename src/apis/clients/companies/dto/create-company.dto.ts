@@ -30,4 +30,5 @@ export class CreateCompanyDto {
 
   logo: string;
   logoUrl: string;
+  review: string;
 }

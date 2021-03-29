@@ -22,10 +22,11 @@ export class ContactsService {
   public async create(createContactDto: CreateContactDto) {
     const existContact = await this.contactModel.findOne({
       name: createContactDto.name,
+      email: createContactDto.email,
     });
 
     if (existContact) {
-      return 'Ya existe un contacto con este nombre';
+      return 'Ya existe un contacto con este nombre y correo';
     } else {
       const contact = new this.contactModel(createContactDto);
       await contact.save();
