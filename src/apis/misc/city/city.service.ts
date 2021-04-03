@@ -56,6 +56,6 @@ export class CityService {
   // Eliminar municipio
   public async remove(id: string) {
     await this.cityModel.findByIdAndDelete(id);
-    return `Municipio elimindo correctamente`;
+    return `Municipio eliminado correctamente`;
   }
 }

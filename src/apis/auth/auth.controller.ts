@@ -8,8 +8,13 @@ import {
   HttpStatus,
   Get,
   UseGuards,
+  Req,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
 import { AuthGuard } from '@nestjs/passport';
+import { Model } from 'mongoose';
+import { User } from '../users/entities/user.entity';
 
 // Service
 import { AuthService } from './auth.service';
@@ -18,13 +23,18 @@ import { GetUser } from './decorators/user.decorator';
 // DTO
 import { AuthSignInDto } from './dto/auth-sign-in.dto';
 import { AuthSignUpDto } from './dto/auth-sign-up.dto';
+import { IJWTPayload } from './interfaces/jwt-payload.interface';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<User>,
+    private readonly authService: AuthService,
+    private _jwtService: JwtService,
+  ) {}
 
   // Registro de usuarios
-  @Post('/signUpUser')
+  @Post('/signup')
   public async signUpUser(
     @Res() res,
     @Body(ValidationPipe) authSignUpDto: AuthSignUpDto,
@@ -53,7 +63,7 @@ export class AuthController {
   }
 
   // Inicio de sesión de usuario
-  @Post('/signInUser')
+  @Post('/signin')
   public async signInUser(
     @Res() res,
     @Body(ValidationPipe) authSignInDto: AuthSignInDto,
@@ -80,6 +90,28 @@ export class AuthController {
             token: response,
           });
       }
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
+  }
+
+  // Renovar token
+  @Get('/renewToken')
+  public async renewToken(@Res() res, @Req() req) {
+    try {
+      const xtoken = req.header('x-token');
+      const token = await this.authService.renewToken(xtoken);
+      const decoded: IJWTPayload = this._jwtService.verify(token);
+      const user = await this.userModel.findById(decoded.id, { password: 0 });
+      return res.status(HttpStatus.ACCEPTED).header('x-token', token).json({
+        ok: true,
+        token,
+        user,
+      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

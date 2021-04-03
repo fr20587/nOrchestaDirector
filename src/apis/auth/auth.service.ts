@@ -16,6 +16,7 @@ import { AuthSignInDto } from './dto/auth-sign-in.dto';
 // Entities
 import { Auth } from './entities/auth.entity';
 import { User } from '../users/entities/user.entity';
+import { IJWTPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -69,6 +70,19 @@ export class AuthService {
     if (!matchPassword) {
       return 'Credenciales Invalidas';
       // throw new UnauthorizedException('Credenciales Invalidas');
+    } else {
+      return await this._jwtService.sign({ id: user.id });
+    }
+  }
+
+  // Renovar token
+  public async renewToken(token) {
+    const decoded: IJWTPayload = this._jwtService.verify(token);
+    const userId = decoded.id;
+
+    const user = await this.userModel.findById(userId, { password: 0 });
+    if (!user) {
+      return 'Credenciales Invalidas';
     } else {
       return await this._jwtService.sign({ id: user.id });
     }

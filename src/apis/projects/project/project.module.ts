@@ -1,5 +1,5 @@
 // NestJS Module
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 // Service
@@ -10,6 +10,7 @@ import { ProjectController } from './project.controller';
 
 // Schema
 import { ProjectSchema } from './schema/project.schema';
+import { LoggerMiddleware } from 'src/apis/auth/middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -18,4 +19,8 @@ import { ProjectSchema } from './schema/project.schema';
   controllers: [ProjectController],
   providers: [ProjectService]
 })
-export class ProjectModule {}
+export class ProjectModule {
+/*   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('project');
+  } */
+}

@@ -1,5 +1,5 @@
 // Nest Module
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
@@ -22,6 +22,7 @@ import { UserSchema } from '../users/schema/user.schema';
 // Strategy
 import { JwtStrtegy } from './strategies/jwt.strategy';
 import { UsersService } from '../users/users.service';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -49,4 +50,8 @@ import { UsersService } from '../users/users.service';
   providers: [AuthService, ConfigService, JwtStrtegy, UsersService],
   exports: [JwtStrtegy, PassportModule],
 })
-export class AuthModule {}
+export class AuthModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('project');
+  }
+}

@@ -8,6 +8,7 @@ export const Tbl6Schema = new Schema(
       {
         //_id: { type: Schema.Types.ObjectId },
         pos: { type: String },
+        type: { type: String },
         unit: { type: String },
         years: [
           {

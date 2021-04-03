@@ -7,6 +7,7 @@ import { CountryModule } from './country/country.module';
 import { StateModule } from './state/state.module';
 import { GenderModule } from './gender/gender.module';
 import { ServiceModule } from './service/service.module';
+import { InversionModule } from './inversion/inversion.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ServiceModule } from './service/service.module';
     StateModule,
     GenderModule,
     ServiceModule,
+    InversionModule,
   ],
 })
 export class MiscModule {}

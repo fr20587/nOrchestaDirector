@@ -8,6 +8,7 @@ export class Tbl6 extends Document {
 
 export class Pos {
   pos: string;
+  type: string;
   unit: string;
   years: Year[];
 }
