@@ -114,9 +114,9 @@ export class AuthController {
       });
     } catch (error) {
       console.log(error);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      return res.status(HttpStatus.EXPECTATION_FAILED).json({
         ok: false,
-        message: 'Error inesperado.',
+        message: 'Token inválido, inicie sesión para restaurarlo!.',
       });
     }
   }
