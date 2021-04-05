@@ -18,6 +18,6 @@ import { PublicServiceSchema } from './schema/public-service.schema';
     ]),
   ],
   controllers: [PublicServiceController],
-  providers: [PublicServiceService]
+  providers: [PublicServiceService],
 })
 export class PublicServiceModule {}
