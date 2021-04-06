@@ -5,6 +5,7 @@ export class Project extends Document {
 
   readonly name: string;
   readonly code: string;
+  readonly place: string;
 
   readonly price: number;
   readonly client: string;

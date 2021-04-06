@@ -20,9 +20,9 @@ export const CompanySchema = new Schema(
     branchOfficeUSDCount: { type: String },
 
     address: { type: String },
-    country: { ref: 'Company', type: Schema.Types.ObjectId },
-    state: { ref: 'Company', type: Schema.Types.ObjectId },
-    city: { ref: 'Company', type: Schema.Types.ObjectId },
+    country: { ref: 'Country', type: Schema.Types.ObjectId },
+    state: { ref: 'State', type: Schema.Types.ObjectId },
+    city: { ref: 'City', type: Schema.Types.ObjectId },
     postalCode: { type: String },
 
     CEO_Name: { type: String },

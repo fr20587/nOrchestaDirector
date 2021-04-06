@@ -35,7 +35,17 @@ export class ProjectService {
 
   // Obtener todos los proyectos
   public async findAll() {
-    const projects = await this.projectModel.find();
+    // const projects = await this.projectModel.find();
+
+    const [projects] = await Promise.all([
+      this.projectModel
+        .find({})
+        .populate('client', 'name')
+        .populate('person', 'name lastName')
+        .populate('service', 'name initials')
+        .populate('user', 'name lastName'),
+    ]);
+    console.log(projects);
     return projects;
   }
 

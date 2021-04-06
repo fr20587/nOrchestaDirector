@@ -59,12 +59,31 @@ export class PrPublicServiceController {
   }
 
   // Buscar los servcios publicos del proyecto
-  @Get('/projectID')
-  public async findAll(@Res() res, @Param('projectID') projectID: string) {
+  @Get('/:projectID')
+  public async findByProject(
+    @Res() res,
+    @Param('projectID') projectID: string,
+  ) {
     try {
       const prPublicServices = await this.prPublicServiceService.findByProject(
         projectID,
       );
+
+      if (
+        prPublicServices ===
+        'Aun no existen los servicios publicos para este proyecto'
+      ) {
+        return res.status(HttpStatus.OK).json({
+          ok: false,
+          prPublicServices,
+        });
+      } else {
+        return res.status(HttpStatus.OK).json({
+          ok: true,
+          prPublicServices,
+        });
+      }
+
       return res.status(HttpStatus.OK).json({
         ok: true,
         prPublicServices,

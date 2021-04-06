@@ -38,10 +38,14 @@ export class PrPublicServiceService {
 
   // Buscar todas las materias primas o insumos por proyecto
   public async findByProject(projectID) {
-    const prPublicServices = await this.prPublicServiceModel.find({
+    const prPublicServices = await this.prPublicServiceModel.findOne({
       projectID,
     });
-    return prPublicServices;
+    if (prPublicServices === null) {
+      return 'Aun no existen los servicios publicos para este proyecto';
+    } else {
+      return prPublicServices;
+    }
   }
 
   // Actualizar servicios publicos
