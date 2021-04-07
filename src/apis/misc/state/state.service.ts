@@ -58,6 +58,6 @@ export class StateService {
   // Eliminar esatdo/municipio
   public async remove(id: string) {
     await this.stateModel.findByIdAndDelete(id);
-    return `Estado/Municipio elimindo correctamente`;
+    return `Estado/Municipio eliminado correctamente`;
   }
 }

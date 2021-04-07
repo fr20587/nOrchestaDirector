@@ -4,30 +4,35 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Res,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 
 // Service
-import { StateService } from './state.service';
+import { TypeEquipmentService } from './type-equipment.service';
 
 // DTO
-import { CreateStateDto } from './dto/create-state.dto';
-import { UpdateStateDto } from './dto/update-state.dto';
+import { CreateTypeEquipmentDto } from './dto/create-type-equipment.dto';
+import { UpdateTypeEquipmentDto } from './dto/update-type-equipment.dto';
 
-@Controller('state')
-export class StateController {
-  constructor(private readonly stateService: StateService) {}
+@Controller('type-equipment')
+export class TypeEquipmentController {
+  constructor(private readonly typeEquipmentService: TypeEquipmentService) {}
 
-  // Crear estado/municipio
+  // Crear tipo de equipo
   @Post('/')
-  public async create(@Res() res, @Body() createStateDto: CreateStateDto) {
+  public async create(
+    @Res() res,
+    @Body() createTypeEquipmentDto: CreateTypeEquipmentDto,
+  ) {
     try {
-      const state = await this.stateService.create(createStateDto);
-      if (state === 'Ya existe un estado/municipio con este nombre') {
+      const state = await this.typeEquipmentService.create(
+        createTypeEquipmentDto,
+      );
+      if (state === 'Ya existe un tipo de equipo con este nombre') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
           state,
@@ -35,7 +40,7 @@ export class StateController {
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Estado/Municipio creado correctamente',
+          message: 'Equipo creado correctamente',
           state,
         });
       }
@@ -48,14 +53,14 @@ export class StateController {
     }
   }
 
-  // Obtener todos los estados/municipios
+  // Obtener todos los tipos de equipos
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const states = await this.stateService.findAll();
+      const typesEquipments = await this.typeEquipmentService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        states,
+        typesEquipments,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +71,20 @@ export class StateController {
     }
   }
 
-  // Obtener todos un estado/municipio
+  // Obtener un tipo equipo
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const state = await this.stateService.findOne(id);
-      if (!state) {
+      const typeEquipment = await this.typeEquipmentService.findOne(id);
+      if (!typeEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El estado/municipio no existe',
+          message: 'El tipo de equipo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          state,
+          typeEquipment,
         });
       }
     } catch (error) {
@@ -91,26 +96,29 @@ export class StateController {
     }
   }
 
-  // Actualizar estado/municipio
+  // Actualizar tipo de equipo
   @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateStateDto: UpdateStateDto,
+    @Body() updateTypeEquipmentDto: UpdateTypeEquipmentDto,
   ) {
     try {
-      const updatedState = await this.stateService.update(id, updateStateDto);
+      const updatedTypeEquipment = await this.typeEquipmentService.update(
+        id,
+        updateTypeEquipmentDto,
+      );
 
-      if (!updatedState) {
+      if (!updatedTypeEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL estado/municipio no existe',
+          message: 'EL Tipo de equipo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Estado/Municipio actualizado correctamente',
-          updatedState,
+          message: 'Tipo de equipo actualizado correctamente',
+          updatedTypeEquipment,
         });
       }
     } catch (error) {
@@ -122,20 +130,20 @@ export class StateController {
     }
   }
 
-  // Eliminar estado/municipio
+  // Eliminar tippo de equipo
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteState = await this.stateService.remove(id);
-      if (!responseDeleteState) {
+      const responseTypeEquipment = await this.typeEquipmentService.remove(id);
+      if (!responseTypeEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El estado/municipio no existe',
+          message: 'El tipo de equipo no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteState,
+          responseTypeEquipment,
         });
       }
     } catch (error) {

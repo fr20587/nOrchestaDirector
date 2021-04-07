@@ -9,6 +9,7 @@ import { InversionModule } from './inversion/inversion.module';
 import { PublicServiceModule } from './public-service/public-service.module';
 import { ServiceModule } from './service/service.module';
 import { StateModule } from './state/state.module';
+import { TypeEquipmentModule } from './type-equipment/type-equipment.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { StateModule } from './state/state.module';
     PublicServiceModule,
     ServiceModule,
     StateModule,
+    TypeEquipmentModule,
   ],
 })
 export class MiscModule {}

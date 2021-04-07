@@ -7,36 +7,41 @@ import {
   Patch,
   Param,
   Delete,
-  Res,
   HttpStatus,
+  Res,
 } from '@nestjs/common';
 
 // Service
-import { StateService } from './state.service';
+import { PrEquipmentService } from './pr-equipment.service';
 
 // DTO
-import { CreateStateDto } from './dto/create-state.dto';
-import { UpdateStateDto } from './dto/update-state.dto';
+import { CreatePrEquipmentDto } from './dto/create-pr-equipment.dto';
+import { UpdatePrEquipmentDto } from './dto/update-pr-equipment.dto';
 
-@Controller('state')
-export class StateController {
-  constructor(private readonly stateService: StateService) {}
+@Controller('pr-equipment')
+export class PrEquipmentController {
+  constructor(private readonly prEquipmentService: PrEquipmentService) {}
 
-  // Crear estado/municipio
+  // Crear Equipo
   @Post('/')
-  public async create(@Res() res, @Body() createStateDto: CreateStateDto) {
+  public async create(
+    @Res() res,
+    @Body() createPrEquipmentDto: CreatePrEquipmentDto,
+  ) {
     try {
-      const state = await this.stateService.create(createStateDto);
-      if (state === 'Ya existe un estado/municipio con este nombre') {
+      const equipment = await this.prEquipmentService.create(
+        createPrEquipmentDto,
+      );
+      if (equipment === 'Ya existe este equipo para este proyecto') {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          state,
+          equipment,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Estado/Municipio creado correctamente',
-          state,
+          message: 'Producto o Servicio creado correctamente',
+          equipment,
         });
       }
     } catch (error) {
@@ -48,14 +53,14 @@ export class StateController {
     }
   }
 
-  // Obtener todos los estados/municipios
+  // Obtener todos los equipos
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const states = await this.stateService.findAll();
+      const equipments = await this.prEquipmentService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        states,
+        equipments,
       });
     } catch (error) {
       console.log(error);
@@ -66,20 +71,43 @@ export class StateController {
     }
   }
 
-  // Obtener todos un estado/municipio
+  // Obtener todos los equipos por proyecto
+  @Get('/:projectID')
+  public async findAllByProject(
+    @Res() res,
+    @Param('projectID') projectID: string,
+  ) {
+    try {
+      const equipments = await this.prEquipmentService.findAllByProject(
+        projectID,
+      );
+      return res.status(HttpStatus.OK).json({
+        ok: true,
+        equipments,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
+  }
+
+  // Obtener un equipo
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const state = await this.stateService.findOne(id);
-      if (!state) {
+      const equipment = await this.prEquipmentService.findOne(id);
+      if (!equipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El estado/municipio no existe',
+          message: 'El equipo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          state,
+          equipment,
         });
       }
     } catch (error) {
@@ -91,26 +119,29 @@ export class StateController {
     }
   }
 
-  // Actualizar estado/municipio
+  // Actualizar equipo
   @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateStateDto: UpdateStateDto,
+    @Body() updatePrEquipmentDto: UpdatePrEquipmentDto,
   ) {
     try {
-      const updatedState = await this.stateService.update(id, updateStateDto);
+      const updatedEquipment = await this.prEquipmentService.update(
+        id,
+        updatePrEquipmentDto,
+      );
 
-      if (!updatedState) {
+      if (!updatedEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL estado/municipio no existe',
+          message: 'El Equipo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Estado/Municipio actualizado correctamente',
-          updatedState,
+          message: 'Producto o Servicio actualizado correctamente',
+          updatedEquipment,
         });
       }
     } catch (error) {
@@ -122,20 +153,20 @@ export class StateController {
     }
   }
 
-  // Eliminar estado/municipio
+  // Eliminar Equipo
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteState = await this.stateService.remove(id);
-      if (!responseDeleteState) {
+      const responseDeleteEquipment = await this.prEquipmentService.remove(id);
+      if (!responseDeleteEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El estado/municipio no existe',
+          message: 'El Equipo no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteState,
+          responseDeleteEquipment,
         });
       }
     } catch (error) {
