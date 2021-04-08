@@ -64,7 +64,7 @@ export class PrFurnitureController {
     }
   }
 
-  // Obtener todos los equipos por proyecto
+  // Obtener todos los muebles por proyecto
   @Get('/:projectID')
   public async findAllByProject(
     @Res() res,

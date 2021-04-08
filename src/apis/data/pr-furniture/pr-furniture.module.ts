@@ -18,6 +18,6 @@ import { FurnitureSchema } from './schema/furniture.shema';
     ]),
   ],
   controllers: [PrFurnitureController],
-  providers: [PrFurnitureService]
+  providers: [PrFurnitureService],
 })
 export class PrFurnitureModule {}

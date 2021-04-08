@@ -14,10 +14,10 @@ import { OfficeItemSchema } from './schema/office-item.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'PrOfficeSchema', schema: OfficeItemSchema },
+      { name: 'PrOfficeItem', schema: OfficeItemSchema },
     ]),
   ],
   controllers: [PrOfficeItemController],
-  providers: [PrOfficeItemService]
+  providers: [PrOfficeItemService],
 })
 export class PrOfficeItemModule {}
