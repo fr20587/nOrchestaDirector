@@ -12,36 +12,40 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { TypeEquipmentService } from './type-equipment.service';
+import { TypePrevExpenseService } from './type-prev-expense.service';
 
 // DTO
-import { CreateTypeEquipmentDto } from './dto/create-type-equipment.dto';
-import { UpdateTypeEquipmentDto } from './dto/update-type-equipment.dto';
+import { CreateTypePrevExpenseDto } from './dto/create-type-prev-expense.dto';
+import { UpdateTypePrevExpenseDto } from './dto/update-type-prev-expense.dto';
 
-@Controller('type-equipment')
-export class TypeEquipmentController {
-  constructor(private readonly typeEquipmentService: TypeEquipmentService) {}
+@Controller('type-prev-expense')
+export class TypePrevExpenseController {
+  constructor(
+    private readonly typePrevExpenseService: TypePrevExpenseService,
+  ) {}
 
-  // Crear tipo de equipo
+  // Crear tipo de gasto previo
   @Post('/')
   public async create(
     @Res() res,
-    @Body() createTypeEquipmentDto: CreateTypeEquipmentDto,
+    @Body() createTypePrevExpenseDto: CreateTypePrevExpenseDto,
   ) {
     try {
-      const typeEquipment = await this.typeEquipmentService.create(
-        createTypeEquipmentDto,
+      const typePrevExpense = await this.typePrevExpenseService.create(
+        createTypePrevExpenseDto,
       );
-      if (typeEquipment === 'Ya existe un tipo de equipo con este nombre') {
+      if (
+        typePrevExpense === 'Ya existe un tipo de gasto previo con este nombre'
+      ) {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          typeEquipment,
+          typePrevExpense,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
           message: 'Equipo creado correctamente',
-          typeEquipment,
+          typePrevExpense,
         });
       }
     } catch (error) {
@@ -53,14 +57,14 @@ export class TypeEquipmentController {
     }
   }
 
-  // Obtener todos los tipos de equipos
+  // Obtener todos los gastos previos
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const typesEquipments = await this.typeEquipmentService.findAll();
+      const typesPrevExpense = await this.typePrevExpenseService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        typesEquipments,
+        typesPrevExpense,
       });
     } catch (error) {
       console.log(error);
@@ -71,20 +75,20 @@ export class TypeEquipmentController {
     }
   }
 
-  // Obtener un tipo equipo
+  // Obtener un gasto previo
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const typeEquipment = await this.typeEquipmentService.findOne(id);
-      if (!typeEquipment) {
+      const typePrevExpense = await this.typePrevExpenseService.findOne(id);
+      if (!typePrevExpense) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El tipo de equipo no existe',
+          message: 'El tipo de gasto previo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          typeEquipment,
+          typePrevExpense,
         });
       }
     } catch (error) {
@@ -96,29 +100,29 @@ export class TypeEquipmentController {
     }
   }
 
-  // Actualizar tipo de equipo
+  // Actualizar tipo de gasto previo
   @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updateTypeEquipmentDto: UpdateTypeEquipmentDto,
+    @Body() updateTypePrevExpenseDto: UpdateTypePrevExpenseDto,
   ) {
     try {
-      const updatedTypeEquipment = await this.typeEquipmentService.update(
+      const updatedTypePrevExpense = await this.typePrevExpenseService.update(
         id,
-        updateTypeEquipmentDto,
+        updateTypePrevExpenseDto,
       );
 
-      if (!updatedTypeEquipment) {
+      if (!updatedTypePrevExpense) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL Tipo de equipo no existe',
+          message: 'EL tipo de gasto previo no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Tipo de equipo actualizado correctamente',
-          updatedTypeEquipment,
+          message: 'Tipo de gasto previo actualizado correctamente',
+          updatedTypePrevExpense,
         });
       }
     } catch (error) {
@@ -130,20 +134,22 @@ export class TypeEquipmentController {
     }
   }
 
-  // Eliminar tippo de equipo
+  // Eliminar tipo de gasto previo
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseTypeEquipment = await this.typeEquipmentService.remove(id);
-      if (!responseTypeEquipment) {
+      const responseTypePrevExpense = await this.typePrevExpenseService.remove(
+        id,
+      );
+      if (!responseTypePrevExpense) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El tipo de equipo no existe',
+          message: 'El tipo de gasto previo no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseTypeEquipment,
+          responseTypePrevExpense,
         });
       }
     } catch (error) {

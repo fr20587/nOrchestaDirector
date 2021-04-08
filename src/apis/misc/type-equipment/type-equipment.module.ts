@@ -18,6 +18,6 @@ import { TypeEquipmentSchema } from './schema/type-equipment.schema';
     ]),
   ],
   controllers: [TypeEquipmentController],
-  providers: [TypeEquipmentService]
+  providers: [TypeEquipmentService],
 })
 export class TypeEquipmentModule {}

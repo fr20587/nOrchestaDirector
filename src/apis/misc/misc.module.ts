@@ -10,6 +10,7 @@ import { PublicServiceModule } from './public-service/public-service.module';
 import { ServiceModule } from './service/service.module';
 import { StateModule } from './state/state.module';
 import { TypeEquipmentModule } from './type-equipment/type-equipment.module';
+import { TypePrevExpenseModule } from './type-prev-expense/type-prev-expense.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TypeEquipmentModule } from './type-equipment/type-equipment.module';
     ServiceModule,
     StateModule,
     TypeEquipmentModule,
+    TypePrevExpenseModule,
   ],
 })
 export class MiscModule {}
