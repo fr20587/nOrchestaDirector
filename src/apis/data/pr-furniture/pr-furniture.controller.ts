@@ -12,38 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { PrEquipmentService } from './pr-equipment.service';
+import { PrFurnitureService } from './pr-furniture.service';
 
 // DTO
-import { CreatePrEquipmentDto } from './dto/create-pr-equipment.dto';
-import { UpdatePrEquipmentDto } from './dto/update-pr-equipment.dto';
+import { CreatePrFurnitureDto } from './dto/create-pr-furniture.dto';
+import { UpdatePrFurnitureDto } from './dto/update-pr-furniture.dto';
 
-@Controller('pr-equipment')
-export class PrEquipmentController {
-  constructor(private readonly prEquipmentService: PrEquipmentService) {}
+@Controller('pr-furniture')
+export class PrFurnitureController {
+  constructor(private readonly prFurnitureService: PrFurnitureService) {}
 
-  // Crear Equipo
+  // Crear mueble
   @Post('/')
   public async create(
     @Res() res,
-    @Body() createPrEquipmentDto: CreatePrEquipmentDto,
+    @Body() createPrFurnitureDto: CreatePrFurnitureDto,
   ) {
     try {
-      const equipment = await this.prEquipmentService.create(
-        createPrEquipmentDto,
+      const furniture = await this.prFurnitureService.create(
+        createPrFurnitureDto,
       );
-      if (equipment === 'Ya existe este equipo para este proyecto') {
-        return res.status(HttpStatus.CONFLICT).json({
-          ok: false,
-          equipment,
-        });
-      } else {
-        return res.status(HttpStatus.CREATED).json({
-          ok: true,
-          message: 'Equipo creado correctamente',
-          equipment,
-        });
-      }
+      return res.status(HttpStatus.CREATED).json({
+        ok: true,
+        message: 'Mueble creado correctamente',
+        furniture,
+      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
@@ -53,14 +46,14 @@ export class PrEquipmentController {
     }
   }
 
-  // Obtener todos los equipos
+  // Obtener todos los muebles
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const equipments = await this.prEquipmentService.findAll();
+      const furnitures = await this.prFurnitureService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        equipments,
+        furnitures,
       });
     } catch (error) {
       console.log(error);
@@ -78,12 +71,12 @@ export class PrEquipmentController {
     @Param('projectID') projectID: string,
   ) {
     try {
-      const equipments = await this.prEquipmentService.findAllByProject(
+      const furnitures = await this.prFurnitureService.findAllByProject(
         projectID,
       );
       return res.status(HttpStatus.OK).json({
         ok: true,
-        equipments,
+        furnitures,
       });
     } catch (error) {
       console.log(error);
@@ -98,16 +91,16 @@ export class PrEquipmentController {
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const equipment = await this.prEquipmentService.findOne(id);
-      if (!equipment) {
+      const furniture = await this.prFurnitureService.findOne(id);
+      if (!furniture) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El equipo no existe',
+          message: 'El mueble no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          equipment,
+          furniture,
         });
       }
     } catch (error) {
@@ -119,29 +112,29 @@ export class PrEquipmentController {
     }
   }
 
-  // Actualizar equipo
+  // Actualizar mueble
   @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updatePrEquipmentDto: UpdatePrEquipmentDto,
+    @Body() updatePrFurnitureDto: UpdatePrFurnitureDto,
   ) {
     try {
-      const updatedEquipment = await this.prEquipmentService.update(
+      const updatedFurniture = await this.prFurnitureService.update(
         id,
-        updatePrEquipmentDto,
+        updatePrFurnitureDto,
       );
 
-      if (!updatedEquipment) {
+      if (!updatedFurniture) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El Equipo no existe',
+          message: 'El mueble no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Producto o Servicio actualizado correctamente',
-          updatedEquipment,
+          message: 'Mueble actualizado correctamente',
+          updatedFurniture,
         });
       }
     } catch (error) {
@@ -153,20 +146,20 @@ export class PrEquipmentController {
     }
   }
 
-  // Eliminar Equipo
+  // Eliminar Mueble
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteEquipment = await this.prEquipmentService.remove(id);
-      if (!responseDeleteEquipment) {
+      const responseDeleteFurniture = await this.prFurnitureService.remove(id);
+      if (!responseDeleteFurniture) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El Equipo no existe',
+          message: 'El mueble no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeleteEquipment,
+          responseDeleteFurniture,
         });
       }
     } catch (error) {
