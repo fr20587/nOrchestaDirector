@@ -40,7 +40,7 @@ export class PrConstructionController {
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Constrccion creada correctamente',
+          message: 'Construccion creada correctamente',
           construction,
         });
       }

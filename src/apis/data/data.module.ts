@@ -16,6 +16,7 @@ import { PrIidModule } from './pr-iid/pr-iid.module';
 import { PrIiiModule } from './pr-iii/pr-iii.module';
 import { PrRealRightModule } from './pr-real-right/pr-real-right.module';
 import { PrOtherAssetModule } from './pr-other-asset/pr-other-asset.module';
+import { PrPrevExpenseModule } from './pr-prev-expense/pr-prev-expense.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PrOtherAssetModule } from './pr-other-asset/pr-other-asset.module';
     PrIiiModule,
     PrRealRightModule,
     PrOtherAssetModule,
+    PrPrevExpenseModule,
   ],
 })
 export class DataModule {}
