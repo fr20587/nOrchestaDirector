@@ -28,22 +28,22 @@ export class PrFurnitureService {
 
   // Buscar todos los muebles
   public async findAll() {
-    // const furniture = await this.prFurnitureModel.find();
-    const [furniture] = await Promise.all([
+    // const furnitures = await this.prFurnitureModel.find();
+    const [furnitures] = await Promise.all([
       this.prFurnitureModel.find({}).populate('user', 'name lastName'),
     ]);
-    return furniture;
+    return furnitures;
   }
 
   // Buscar todos los muebles del proyecto
   public async findAllByProject(projectID) {
-    // const furniture = await this.prFurnitureModel.find({ projectID });
-    const [furniture] = await Promise.all([
+    // const furnitures = await this.prFurnitureModel.find({ projectID });
+    const [furnitures] = await Promise.all([
       this.prFurnitureModel
         .find({ projectID })
         .populate('user', 'name lastName'),
     ]);
-    return furniture;
+    return furnitures;
   }
 
   // Buscar un mueble
