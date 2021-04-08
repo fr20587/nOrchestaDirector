@@ -26,11 +26,11 @@ export class PrIidController {
   @Post('/')
   public async create(@Res() res, @Body() createPrIidDto: CreatePrIidDto) {
     try {
-      const furniture = await this.prIidService.create(createPrIidDto);
+      const iid = await this.prIidService.create(createPrIidDto);
       return res.status(HttpStatus.CREATED).json({
         ok: true,
         message: 'Inversion Inducida Directa creada correctamente',
-        furniture,
+        iid,
       });
     } catch (error) {
       console.log(error);
@@ -48,10 +48,10 @@ export class PrIidController {
     @Param('projectID') projectID: string,
   ) {
     try {
-      const furnitures = await this.prIidService.findAllByProject(projectID);
+      const iids = await this.prIidService.findAllByProject(projectID);
       return res.status(HttpStatus.OK).json({
         ok: true,
-        furnitures,
+        iids,
       });
     } catch (error) {
       console.log(error);

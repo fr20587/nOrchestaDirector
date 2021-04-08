@@ -1,5 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+// Nest Modules
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  Res,
+} from '@nestjs/common';
+
+// Service
 import { PrIiiService } from './pr-iii.service';
+
+// DTO
 import { CreatePrIiiDto } from './dto/create-pr-iii.dto';
 import { UpdatePrIiiDto } from './dto/update-pr-iii.dto';
 
@@ -7,28 +22,99 @@ import { UpdatePrIiiDto } from './dto/update-pr-iii.dto';
 export class PrIiiController {
   constructor(private readonly prIiiService: PrIiiService) {}
 
-  @Post()
-  create(@Body() createPrIiiDto: CreatePrIiiDto) {
-    return this.prIiiService.create(createPrIiiDto);
+  // Crear III
+  @Post('/')
+  public async create(@Res() res, @Body() createPrIiiDto: CreatePrIiiDto) {
+    try {
+      const iii = await this.prIiiService.create(createPrIiiDto);
+      return res.status(HttpStatus.CREATED).json({
+        ok: true,
+        message: 'Inversion Inducida Indirecta creada correctamente',
+        iii,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
   }
 
-  @Get()
-  findAll() {
-    return this.prIiiService.findAll();
+  // Obtener todos las IID por proyecto
+  @Get('/:projectID')
+  public async findAllByProject(
+    @Res() res,
+    @Param('projectID') projectID: string,
+  ) {
+    try {
+      const iiis = await this.prIiiService.findAllByProject(projectID);
+      return res.status(HttpStatus.OK).json({
+        ok: true,
+        iiis,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.prIiiService.findOne(+id);
-  }
-
+  // Actualizar III
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePrIiiDto: UpdatePrIiiDto) {
-    return this.prIiiService.update(+id, updatePrIiiDto);
+  public async update(
+    @Res() res,
+    @Param('id') id: string,
+    @Body() updatePrIiiDto: UpdatePrIiiDto,
+  ) {
+    try {
+      const updatedIii = await this.prIiiService.update(id, updatePrIiiDto);
+
+      if (!updatedIii) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          ok: false,
+          message: 'La inversion no existe',
+        });
+      } else {
+        return res.status(HttpStatus.OK).json({
+          ok: true,
+          message: 'Inversion actualizada correctamente',
+          updatedIii,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
   }
 
+  // Eliminar III
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.prIiiService.remove(+id);
+  public async remove(@Res() res, @Param('id') id: string) {
+    try {
+      const responseDeleteIii = await this.prIiiService.remove(id);
+      if (!responseDeleteIii) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          ok: false,
+          message: 'La inversion no existe',
+        });
+      } else {
+        return res.status(HttpStatus.ACCEPTED).json({
+          ok: true,
+          responseDeleteIii,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        ok: false,
+        message: 'Error inesperado.',
+      });
+    }
   }
 }
