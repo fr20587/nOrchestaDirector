@@ -32,7 +32,7 @@ export class PrRealRightController {
       const right = await this.prRealRightService.create(createPrRealRightDto);
       return res.status(HttpStatus.CREATED).json({
         ok: true,
-        message: 'Mueble creado correctamente',
+        message: 'Derecho creado correctamente',
         right,
       });
     } catch (error) {

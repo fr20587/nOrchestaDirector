@@ -5,5 +5,5 @@ export class PrIid extends Document {
   readonly projectID: string;
   readonly type: string;
   readonly name: string;
-  readonly price: number;
+  readonly cost: number;
 }

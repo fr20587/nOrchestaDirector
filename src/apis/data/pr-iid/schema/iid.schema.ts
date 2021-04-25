@@ -6,7 +6,7 @@ export const IidSchema = new Schema(
     projectID: { ref: 'Project', type: Schema.Types.ObjectId },
     type: { type: String, require: true },
     name: { type: String, require: true },
-    price: { type: Number, require: true },
+    cost: { type: Number, require: true },
   },
   {
     versionKey: false,

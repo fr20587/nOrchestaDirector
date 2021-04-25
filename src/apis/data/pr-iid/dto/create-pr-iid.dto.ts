@@ -3,5 +3,5 @@ export class CreatePrIidDto {
   projectID: string;
   type: string;
   name: string;
-  price: number;
+  cost: number;
 }

@@ -6,5 +6,5 @@ export class UpdatePrIiiDto extends PartialType(CreatePrIiiDto) {
   projectID: string;
   type: string;
   name: string;
-  price: number;
+  cost: number;
 }

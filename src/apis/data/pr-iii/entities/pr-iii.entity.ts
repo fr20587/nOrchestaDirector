@@ -5,6 +5,6 @@ export class PrIii extends Document {
   readonly projectID: string;
   readonly type: string;
   readonly name: string;
-  readonly price: number;
+  readonly cost: number;
 }
 
