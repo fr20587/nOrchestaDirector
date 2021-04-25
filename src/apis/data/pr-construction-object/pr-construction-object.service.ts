@@ -78,14 +78,14 @@ export class PrConstructionObjectService {
     id: string,
     updatePrConstructionObjectDto: UpdatePrConstructionObjectDto,
   ) {
-    const updatedConstructionObjects = await this.prConstructionObjectModel.findByIdAndUpdate(
+    const updatedConstructionObject = await this.prConstructionObjectModel.findByIdAndUpdate(
       id,
       updatePrConstructionObjectDto,
       {
         new: true,
       },
     );
-    return updatedConstructionObjects;
+    return updatedConstructionObject;
   }
 
   // Eliminar objeto de obra
