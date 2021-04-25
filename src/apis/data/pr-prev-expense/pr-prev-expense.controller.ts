@@ -29,21 +29,14 @@ export class PrPrevExpenseController {
     @Body() createPrPrevExpenseDto: CreatePrPrevExpenseDto,
   ) {
     try {
-      const prevExpenses = await this.prPrevExpenseService.create(
+      const prevExpense = await this.prPrevExpenseService.create(
         createPrPrevExpenseDto,
       );
-      if (prevExpenses === 'Ya existen los gastos previos para este proyecto') {
-        return res.status(HttpStatus.CONFLICT).json({
-          ok: false,
-          prevExpenses,
-        });
-      } else {
-        return res.status(HttpStatus.CREATED).json({
-          ok: true,
-          message: 'Gastos previos creados correctamente',
-          prevExpenses,
-        });
-      }
+      return res.status(HttpStatus.CREATED).json({
+        ok: true,
+        message: 'Gastos previos creados correctamente',
+        prevExpense,
+      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

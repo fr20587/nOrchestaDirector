@@ -27,7 +27,7 @@ export const UserSchema = new Schema(
     street2: { type: String },
     city: { type: String },
     state: { type: String },
-    postalCode: { typr: String },
+    postalCode: { type: String },
     info: { type: String },
   },
   {

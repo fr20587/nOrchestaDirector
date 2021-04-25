@@ -9,7 +9,7 @@ export const ConstructionSchema = new Schema(
       {
         name: { type: String, require: true },
         totalCost: { type: Number, require: true },
-        task: [
+        tasks: [
           {
             name: { type: String, require: true },
             cost: { type: Number, require: true },

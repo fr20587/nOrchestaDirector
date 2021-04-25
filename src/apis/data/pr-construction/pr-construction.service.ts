@@ -53,7 +53,12 @@ export class PrConstructionService {
         .find({ projectID })
         .populate('user', 'name lastName'),
     ]);
-    return constructions;
+
+    if (!constructions) {
+      return 'No existe la construccion para este proyecto';
+    } else {
+      return constructions;
+    }
   }
 
   // Obtener una construccion

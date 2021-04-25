@@ -2,19 +2,14 @@ import { Schema } from 'mongoose';
 
 export const PrevExpenseSchema = new Schema(
   {
-    user: { ref: 'User', type: Schema.Types.ObjectId },
-    projectID: { ref: 'Project', type: Schema.Types.ObjectId },
-    totalCost: { type: Number, require: true },
-    typeExpense: [
-      {
-        name: {
-          ref: 'TypePrevExpense',
-          type: Schema.Types.ObjectId,
-          require: true,
-        },
-        cost: { type: Number, require: true },
-      },
-    ],
+    user: { ref: 'User', type: Schema.Types.ObjectId, require: true },
+    projectID: { ref: 'Project', type: Schema.Types.ObjectId, require: true },
+    name: {
+      ref: 'TypePrevExpense',
+      type: Schema.Types.ObjectId,
+      require: true,
+    },
+    cost: { type: Number, require: true },
   },
   {
     versionKey: false,

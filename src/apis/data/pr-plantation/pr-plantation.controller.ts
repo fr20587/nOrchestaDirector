@@ -71,12 +71,12 @@ export class PrPlantationController {
     @Param('projectID') projectID: string,
   ) {
     try {
-      const plantataions = await this.prPlantationService.findAllByProject(
+      const plantations = await this.prPlantationService.findAllByProject(
         projectID,
       );
       return res.status(HttpStatus.OK).json({
         ok: true,
-        plantataions,
+        plantations,
       });
     } catch (error) {
       console.log(error);
@@ -150,7 +150,9 @@ export class PrPlantationController {
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeletePlantation = await this.prPlantationService.remove(id);
+      const responseDeletePlantation = await this.prPlantationService.remove(
+        id,
+      );
       if (!responseDeletePlantation) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,

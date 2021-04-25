@@ -52,10 +52,10 @@ export class PrComputerEquipmentController {
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const computerEquipment = await this.prComputerEquipmentService.findAll();
+      const computerEquipments = await this.prComputerEquipmentService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        computerEquipment,
+        computerEquipments,
       });
     } catch (error) {
       console.log(error);
@@ -73,12 +73,12 @@ export class PrComputerEquipmentController {
     @Param('projectID') projectID: string,
   ) {
     try {
-      const computerEquipment = await this.prComputerEquipmentService.findAllByProject(
+      const computerEquipments = await this.prComputerEquipmentService.findAllByProject(
         projectID,
       );
       return res.status(HttpStatus.OK).json({
         ok: true,
-        computerEquipment,
+        computerEquipments,
       });
     } catch (error) {
       console.log(error);
@@ -154,7 +154,9 @@ export class PrComputerEquipmentController {
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeleteCoputerEquipment = await this.prComputerEquipmentService.remove(id);
+      const responseDeleteCoputerEquipment = await this.prComputerEquipmentService.remove(
+        id,
+      );
       if (!responseDeleteCoputerEquipment) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,

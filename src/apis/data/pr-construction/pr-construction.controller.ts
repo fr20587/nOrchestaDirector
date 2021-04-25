@@ -81,10 +81,17 @@ export class PrConstructionController {
       const construction = await this.prConstructionService.findAllByProject(
         projectID,
       );
-      return res.status(HttpStatus.OK).json({
-        ok: true,
-        construction,
-      });
+      if (construction === 'No existe la construccion para este proyecto') {
+        return res.status(HttpStatus.CONFLICT).json({
+          ok: false,
+          construction,
+        });
+      } else {
+        return res.status(HttpStatus.OK).json({
+          ok: true,
+          construction,
+        });
+      }
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

@@ -61,10 +61,10 @@ export class TypePrevExpenseController {
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const typesPrevExpense = await this.typePrevExpenseService.findAll();
+      const typesPrevExpenses = await this.typePrevExpenseService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        typesPrevExpense,
+        typesPrevExpenses,
       });
     } catch (error) {
       console.log(error);

@@ -83,11 +83,6 @@ export class PrPublicServiceController {
           prPublicServices,
         });
       }
-
-      return res.status(HttpStatus.OK).json({
-        ok: true,
-        prPublicServices,
-      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

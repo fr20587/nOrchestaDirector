@@ -21,28 +21,17 @@ export class PrPrevExpenseService {
 
   // Crear gastos previos
   public async create(createPrPrevExpenseDto: CreatePrPrevExpenseDto) {
-    const existPrevExpenses = await this.prPrevExpenseModel.findOne({
-      projectID: createPrPrevExpenseDto.projectID,
-    });
-
-    if (existPrevExpenses) {
-      return 'Ya existen los gastos previos para este proyecto';
-    } else {
-      const prevExpenses = new this.prPrevExpenseModel(createPrPrevExpenseDto);
-      await prevExpenses.save();
-      return prevExpenses;
-    }
+    const prevExpense = new this.prPrevExpenseModel(createPrPrevExpenseDto);
+    await prevExpense.save();
+    return prevExpense;
   }
 
   // Obtener los gastos previos del proyecto
   public async findAllByProject(projectID) {
-    // const prevExpenses = await this.prPrevExpenseModel.find({ projectID });
-    const [prevExpenses] = await Promise.all([
-      this.prPrevExpenseModel
-        .find({ projectID })
-        .populate('user', 'name lastName')
-        .populate('name', 'name'),
-    ]);
+    const prevExpenses = await this.prPrevExpenseModel
+      .find({ projectID })
+      .populate('user', 'name lastName')
+      .populate('name', 'name cost');
     return prevExpenses;
   }
 
