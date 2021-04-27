@@ -25,7 +25,7 @@ export class PrConstructionObjectService {
   ) {
     const existConstructionObject = await this.prConstructionObjectModel.findOne(
       {
-        projectID: createPrConstructionObjectDto.projectID,
+        name: createPrConstructionObjectDto.name,
       },
     );
 
@@ -50,7 +50,7 @@ export class PrConstructionObjectService {
 
   // Obtener todos los objetos de obra por proyecto
   public async findAllByProject(projectID) {
-    const constructionObjects = await Promise.all([
+    const [constructionObjects] = await Promise.all([
       this.prConstructionObjectModel
         .find({ projectID })
         .populate('user', 'name lastName'),

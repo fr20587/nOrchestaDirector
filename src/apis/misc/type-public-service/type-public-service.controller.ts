@@ -12,29 +12,31 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { PublicServiceService } from './public-service.service';
+import { TypePublicServiceService } from './type-public-service.service';
 
 // DTO
-import { CreatePublicServiceDto } from './dto/create-public-service.dto';
-import { UpdatePublicServiceDto } from './dto/update-public-service.dto';
+import { CreateTypePublicServiceDto } from './dto/create-type-public-service.dto';
+import { UpdateTypePublicServiceDto } from './dto/update-type-public-service.dto';
 
-@Controller('public-service')
-export class PublicServiceController {
-  constructor(private readonly publicServiceService: PublicServiceService) {}
+@Controller('type-public-service')
+export class TypePublicServiceController {
+  constructor(
+    private readonly typePublicServiceService: TypePublicServiceService,
+  ) {}
 
   // Crear servicio publico
   @Post('/')
   public async create(
     @Res() res,
-    @Body() createPublicServiceDto: CreatePublicServiceDto,
+    @Body() createTypePublicServiceDto: CreateTypePublicServiceDto,
   ) {
     try {
-      const publicService = await this.publicServiceService.create(
-        createPublicServiceDto,
+      const publicService = await this.typePublicServiceService.create(
+        createTypePublicServiceDto,
       );
       if (
         publicService ===
-        'Ya existe un servicio publico con este nombre para este proyecto'
+        'Ya existe un tipo servicio publico con este nombre para este proyecto'
       ) {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
@@ -43,7 +45,7 @@ export class PublicServiceController {
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Servicio publico creado correctamente',
+          message: 'Tipo Servicio publico creado correctamente',
           publicService,
         });
       }
@@ -60,10 +62,10 @@ export class PublicServiceController {
   @Get('/')
   public async findAll(@Res() res) {
     try {
-      const publicServices = await this.publicServiceService.findAll();
+      const typePublicServices = await this.typePublicServiceService.findAll();
       return res.status(HttpStatus.OK).json({
         ok: true,
-        publicServices,
+        typePublicServices,
       });
     } catch (error) {
       console.log(error);
@@ -78,10 +80,12 @@ export class PublicServiceController {
   @Get(':id')
   public async findById(@Res() res, @Param('id') id: string) {
     try {
-      const publicService = await this.publicServiceService.findAllById(id);
+      const typePublicService = await this.typePublicServiceService.findAllById(
+        id,
+      );
       return res.status(HttpStatus.OK).json({
         ok: true,
-        publicService,
+        typePublicService,
       });
     } catch (error) {
       console.log(error);
@@ -97,24 +101,24 @@ export class PublicServiceController {
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updatePublicServiceDto: UpdatePublicServiceDto,
+    @Body() updateTypePublicServiceDto: UpdateTypePublicServiceDto,
   ) {
     try {
-      const updatedPublicService = await this.publicServiceService.update(
+      const updatedTypePublicService = await this.typePublicServiceService.update(
         id,
-        updatePublicServiceDto,
+        updateTypePublicServiceDto,
       );
 
-      if (!updatedPublicService) {
+      if (!updatedTypePublicService) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El servicio publico no existe',
+          message: 'El tipo de servicio publico no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Servicio publico actualizado correctamente',
-          updatedPublicService,
+          message: 'Tipo de servicio público actualizado correctamente',
+          updatedTypePublicService,
         });
       }
     } catch (error) {
@@ -130,18 +134,18 @@ export class PublicServiceController {
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeletePublicService = await this.publicServiceService.remove(
+      const responseDeleteTypePublicService = await this.typePublicServiceService.remove(
         id,
       );
-      if (!responseDeletePublicService) {
+      if (!responseDeleteTypePublicService) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El servicio publico no existe',
+          message: 'El tipo de servicio publico no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeletePublicService,
+          responseDeleteTypePublicService,
         });
       }
     } catch (error) {

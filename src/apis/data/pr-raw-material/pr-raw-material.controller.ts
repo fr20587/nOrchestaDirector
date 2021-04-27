@@ -12,15 +12,15 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { RawMaterialService } from './raw-material.service';
+import { PrRawMaterialService } from './pr-raw-material.service';
 
 // DTO
-import { CreateRawMaterialDto } from './dto/create-raw-material.dto';
-import { UpdateRawMaterialDto } from './dto/update-raw-material.dto';
+import { CreateRawMaterialDto } from './dto/create-pr-raw-material.dto';
+import { UpdateRawMaterialDto } from './dto/update-pr-raw-material.dto';
 
-@Controller('raw-material')
-export class RawMaterialController {
-  constructor(private readonly rawMaterialService: RawMaterialService) {}
+@Controller('pr-raw-material')
+export class PrRawMaterialController {
+  constructor(private readonly rawMaterialService: PrRawMaterialService) {}
 
   // Crear materia prima o insumo
   @Post('/')

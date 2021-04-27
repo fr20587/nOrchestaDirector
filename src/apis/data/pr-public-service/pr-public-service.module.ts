@@ -2,8 +2,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-// Modules
-
 // Service
 import { PrPublicServiceService } from './pr-public-service.service';
 

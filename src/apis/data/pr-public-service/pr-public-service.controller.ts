@@ -36,7 +36,7 @@ export class PrPublicServiceController {
       );
       if (
         publicServices ===
-        'Ya existen los servicios publicos para este proyecto'
+        'Ya existen un servicio público con este nombre para este proyecto'
       ) {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,

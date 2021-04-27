@@ -2,19 +2,33 @@ import { Schema } from 'mongoose';
 
 export const PrPublicServiceSchema = new Schema(
   {
-    user: { ref: 'User', type: Schema.Types.ObjectId },
+    cost: { type: Number, require: true },
+    index: { type: Number, require: true },
+    name: { type: String, require: true },
     projectID: { ref: 'Project', type: Schema.Types.ObjectId },
-    type: [
-      {
-        serviceID: { ref: 'PublicService', type: Schema.Types.ObjectId },
-        type: { type: String, require: true },
-        name: { type: String, require: true },
-        unit: { type: String, require: true },
-        price: { type: Number, require: true },
-      },
-    ],
+    type: { ref: 'TypePublicService', type: Schema.Types.ObjectId },
+    unit: { type: String, require: true },
+    user: { ref: 'User', type: Schema.Types.ObjectId },
   },
   {
     versionKey: false,
   },
 );
+
+PrPublicServiceSchema.virtual('projectRef', {
+  ref: 'Project',
+  localField: 'projectID',
+  foreignField: '_id',
+});
+
+PrPublicServiceSchema.virtual('typePublicService', {
+  ref: 'TypePublicService',
+  localField: 'type',
+  foreignField: '_id',
+});
+
+PrPublicServiceSchema.virtual('userRef', {
+  ref: 'User',
+  localField: 'user',
+  foreignField: '_id',
+});

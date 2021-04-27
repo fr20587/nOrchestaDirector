@@ -1,12 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateRawMaterialDto } from './create-raw-material.dto';
+import { CreateRawMaterialDto } from './create-pr-raw-material.dto';
 
 export class UpdateRawMaterialDto extends PartialType(CreateRawMaterialDto) {
-  user: string;
-  projectID: string;
-  supplier: string;
+  cost: number;
+  index: number;
   name: string;
   origin: string;
-  price: number;
+  pos: string;
+  projectID: string;
+  supplier: string;
   unit: string;
+  user: string;
 }

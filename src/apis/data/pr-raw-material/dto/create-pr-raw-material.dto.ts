@@ -1,9 +1,11 @@
-export class CreatePrPublicServiceDto {
+export class CreateRawMaterialDto {
   cost: number;
   index: number;
   name: string;
+  origin: string;
+  pos: string;
   projectID: string;
-  type: string;
+  supplier: string;
   unit: string;
   user: string;
 }

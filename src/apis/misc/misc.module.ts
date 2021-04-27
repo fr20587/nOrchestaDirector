@@ -6,7 +6,7 @@ import { CityModule } from './city/city.module';
 import { CountryModule } from './country/country.module';
 import { GenderModule } from './gender/gender.module';
 import { InversionModule } from './inversion/inversion.module';
-import { PublicServiceModule } from './public-service/public-service.module';
+import { TypePublicServiceModule } from './type-public-service/type-public-service.module';
 import { ServiceModule } from './service/service.module';
 import { StateModule } from './state/state.module';
 import { TypeEquipmentModule } from './type-equipment/type-equipment.module';
@@ -18,7 +18,7 @@ import { TypePrevExpenseModule } from './type-prev-expense/type-prev-expense.mod
     CountryModule,
     GenderModule,
     InversionModule,
-    PublicServiceModule,
+    TypePublicServiceModule,
     ServiceModule,
     StateModule,
     TypeEquipmentModule,

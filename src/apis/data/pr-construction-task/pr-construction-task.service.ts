@@ -24,7 +24,7 @@ export class PrConstructionTaskService {
     createPrConstructionTaskDto: CreatePrConstructionTaskDto,
   ) {
     const existConstructionTask = await this.prConstructionTaskModel.findOne({
-      projectID: createPrConstructionTaskDto.projectID,
+      name: createPrConstructionTaskDto.name,
     });
 
     if (existConstructionTask) {
@@ -48,11 +48,14 @@ export class PrConstructionTaskService {
 
   // Obtener todos los acciones contructivas por proyecto
   public async findAllByProject(projectID) {
-    const constructionTasks = await Promise.all([
+    const [constructionTasks] = await Promise.all([
       this.prConstructionTaskModel
         .find({ projectID })
-        .populate('user', 'name lastName'),
+        .populate('user', 'name lastName')
+        .populate('constructionObject', 'name'),
     ]);
+
+    console.log(constructionTasks);
 
     if (!constructionTasks) {
       return 'No existen acciones contructivas para este proyecto';

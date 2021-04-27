@@ -22,11 +22,11 @@ export class PrPublicServiceService {
   // Crear Servicios Publicos
   public async create(createPrPublicServiceDto: CreatePrPublicServiceDto) {
     const existPrPublicServices = await this.prPublicServiceModel.findOne({
-      projectID: createPrPublicServiceDto.projectID,
+      name: createPrPublicServiceDto.name,
     });
 
     if (existPrPublicServices) {
-      return 'Ya existen los servicios publicos para este proyecto';
+      return 'Ya existen un servicio público con este nombre para este proyecto';
     } else {
       const prPublicServices = new this.prPublicServiceModel(
         createPrPublicServiceDto,
@@ -38,9 +38,10 @@ export class PrPublicServiceService {
 
   // Buscar todas las materias primas o insumos por proyecto
   public async findByProject(projectID) {
-    const prPublicServices = await this.prPublicServiceModel.findOne({
-      projectID,
-    });
+    const prPublicServices = await this.prPublicServiceModel
+      .find({ projectID })
+      .populate('type', 'name');
+
     if (prPublicServices === null) {
       return 'Aun no existen los servicios publicos para este proyecto';
     } else {

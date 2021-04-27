@@ -6,17 +6,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 // DTO
-import { CreateRawMaterialDto } from './dto/create-raw-material.dto';
-import { UpdateRawMaterialDto } from './dto/update-raw-material.dto';
+import { CreateRawMaterialDto } from './dto/create-pr-raw-material.dto';
+import { UpdateRawMaterialDto } from './dto/update-pr-raw-material.dto';
 
 // Entity
-import { RawMaterial } from './entities/raw-material.entity';
+import { PrRawMaterial } from './entities/pr-raw-material.entity';
 
 @Injectable()
-export class RawMaterialService {
+export class PrRawMaterialService {
   constructor(
-    @InjectModel('RawMaterial')
-    private readonly rawMaterialModel: Model<RawMaterial>,
+    @InjectModel('PrRawMaterial')
+    private readonly rawMaterialModel: Model<PrRawMaterial>,
   ) {}
 
   // Crear materia prima o insumo

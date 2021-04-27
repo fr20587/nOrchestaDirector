@@ -6,6 +6,7 @@ export class UpdatePrConstructionTaskDto extends PartialType(
 ) {
   user: string;
   projectID: string;
+  constructionObject: string;
   name: string;
   cost: number;
   supplier: string;

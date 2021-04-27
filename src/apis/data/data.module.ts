@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 
 // Modules
 import { PosModule } from './pr-pos/pos.module';
-import { RawMaterialModule } from './pr-raw-material/raw-material.module';
+import { PrRawMaterialModule } from './pr-raw-material/pr-raw-material.module';
 import { PrPublicServiceModule } from './pr-public-service/pr-public-service.module';
 import { PrEquipmentModule } from './pr-equipment/pr-equipment.module';
 import { PrFurnitureModule } from './pr-furniture/pr-furniture.module';
@@ -23,7 +23,7 @@ import { PrConstructionTaskModule } from './pr-construction-task/pr-construction
 @Module({
   imports: [
     PosModule,
-    RawMaterialModule,
+    PrRawMaterialModule,
     PrPublicServiceModule,
     PrEquipmentModule,
     PrFurnitureModule,
