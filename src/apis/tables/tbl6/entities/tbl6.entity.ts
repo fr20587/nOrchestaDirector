@@ -3,22 +3,15 @@ import { Document } from 'mongoose';
 export class Tbl6 extends Document {
   readonly user: string;
   readonly projectID: string;
-  readonly posS: Pos[];
-}
-
-export class Pos {
-  pos: string;
-  type: string;
-  unit: string;
-  years: Year[];
-}
-
-export class Year {
-  year: number;
-  aci: number;
-  price: number;
-  qty: number;
-  value: number;
-  exp: number;
-  im: number;
+  readonly year: number;
+  readonly aci: number;
+  readonly pos: string;
+  readonly unit: string;
+  readonly qty: number;
+  readonly price: number;
+  readonly value: number;
+  readonly exp: number;
+  readonly percentExp: number;
+  readonly im: number;
+  readonly percentIm: number;
 }

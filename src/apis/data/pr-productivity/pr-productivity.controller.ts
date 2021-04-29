@@ -12,34 +12,39 @@ import {
 } from '@nestjs/common';
 
 // Service
-import { PosService } from './pos.service';
+import { PrProductivityService } from './pr-productivity.service';
 
 // DTO
-import { CreatePoDto } from './dto/create-po.dto';
-import { UpdatePoDto } from './dto/update-po.dto';
+import { CreatePrProductivityDto } from './dto/create-pr-productivity.dto';
+import { UpdatePrProductivityDto } from './dto/update-pr-productivity.dto';
 
-@Controller('pos')
-export class PosController {
-  constructor(private readonly posService: PosService) {}
+@Controller('pr-productivity')
+export class PrProductivityController {
+  constructor(private readonly prProductivityService: PrProductivityService) {}
 
-  // Crear Producto o Servicio
+  // Crear productividad
   @Post('/')
-  public async create(@Res() res, @Body() createPoDto: CreatePoDto) {
+  public async create(
+    @Res() res,
+    @Body() createPrProductivityDto: CreatePrProductivityDto,
+  ) {
     try {
-      const pos = await this.posService.create(createPoDto);
+      const productivity = await this.prProductivityService.create(
+        createPrProductivityDto,
+      );
       if (
-        pos ===
-        'Ya existe un producto o servicio con este nombre para este proyecto'
+        productivity ===
+        'Ya existe un productividad para este año en este proyecto'
       ) {
         return res.status(HttpStatus.CONFLICT).json({
           ok: false,
-          pos,
+          productivity,
         });
       } else {
         return res.status(HttpStatus.CREATED).json({
           ok: true,
-          message: 'Producto o Servicio creado correctamente',
-          pos,
+          message: 'Productividad creada correctamente',
+          productivity,
         });
       }
     } catch (error) {
@@ -51,35 +56,19 @@ export class PosController {
     }
   }
 
-  // Buscar productos o servicios
-  @Get('/')
-  public async findAll(@Res() res) {
-    try {
-      const posS = await this.posService.findAll();
-      return res.status(HttpStatus.OK).json({
-        ok: true,
-        posS,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        ok: false,
-        message: 'Error inesperado.',
-      });
-    }
-  }
-
-  // Buscar productos o servicios por projectos
+  // Buscar productividad del proyecto
   @Get('/:projectID')
   public async findAllByProject(
     @Res() res,
     @Param('projectID') projectID: string,
   ) {
     try {
-      const posS = await this.posService.findAllByProject(projectID);
+      const productivities = await this.prProductivityService.findAllByProject(
+        projectID,
+      );
       return res.status(HttpStatus.OK).json({
         ok: true,
-        posS,
+        productivities,
       });
     } catch (error) {
       console.log(error);
@@ -90,20 +79,20 @@ export class PosController {
     }
   }
 
-  // Buscar un producto o servicio
-  @Get('/id/:id')
+  // Buscar productivdad por id
+  @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
-      const pos = await this.posService.findOne(id);
-      if (!pos) {
+      const productivity = await this.prProductivityService.findOne(id);
+      if (!productivity) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El producto o servicio no existe',
+          message: 'La productividad no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          pos,
+          productivity,
         });
       }
     } catch (error) {
@@ -115,26 +104,29 @@ export class PosController {
     }
   }
 
-  // Actualizar un producto o un servicio
+  // Actualizar productividad
   @Patch(':id')
   public async update(
     @Res() res,
     @Param('id') id: string,
-    @Body() updatePoDto: UpdatePoDto,
+    @Body() updatePrProductivityDto: UpdatePrProductivityDto,
   ) {
     try {
-      const updatedPos = await this.posService.update(id, updatePoDto);
+      const updatedProductivity = await this.prProductivityService.update(
+        id,
+        updatePrProductivityDto,
+      );
 
-      if (!updatedPos) {
+      if (!updatedProductivity) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'EL producto o servicio no existe',
+          message: 'La productividad no existe',
         });
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Producto o Servicio actualizado correctamente',
-          updatedPos,
+          message: 'Productividad actualizada correctamente',
+          updatedProductivity,
         });
       }
     } catch (error) {
@@ -146,20 +138,22 @@ export class PosController {
     }
   }
 
-  // Eliminar un producto o un servicio
+  // Eliminar productividad
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
-      const responseDeletePos = await this.posService.remove(id);
-      if (!responseDeletePos) {
+      const responseDeleteProductivity = await this.prProductivityService.remove(
+        id,
+      );
+      if (!responseDeleteProductivity) {
         return res.status(HttpStatus.NOT_FOUND).json({
           ok: false,
-          message: 'El producto o servicio no existe',
+          message: 'La productividad no existe',
         });
       } else {
         return res.status(HttpStatus.ACCEPTED).json({
           ok: true,
-          responseDeletePos,
+          responseDeleteProductivity,
         });
       }
     } catch (error) {

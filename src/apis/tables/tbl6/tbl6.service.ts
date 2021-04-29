@@ -18,23 +18,14 @@ export class Tbl6Service {
 
   // Crear tabla 6
   public async create(createTbl6Dto: CreateTbl6Dto) {
-    const existTbl6 = await this.tbl6Model.findOne({
-      projectID: createTbl6Dto.projectID,
-    });
-
-    if (existTbl6) {
-      return 'Ya existe la tabla 6 en este proyecto';
-    } else {
-      const tbl6 = new this.tbl6Model(createTbl6Dto);
-      await tbl6.save();
-      return tbl6;
-    }
+    const tbl6 = new this.tbl6Model(createTbl6Dto);
+    await tbl6.save();
+    return tbl6;
   }
 
   // Obtener tabla 6 por proyectos
   public async findOne(projectID: string) {
-    const tbl6 = await this.tbl6Model.findOne({ projectID });
-    //const { _id, ...data } = tbl6;
+    const tbl6 = await this.tbl6Model.find({ projectID });
     console.log(tbl6);
     return tbl6;
   }

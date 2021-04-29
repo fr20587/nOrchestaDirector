@@ -19,6 +19,7 @@ import { PrOtherAssetModule } from './pr-other-asset/pr-other-asset.module';
 import { PrPrevExpenseModule } from './pr-prev-expense/pr-prev-expense.module';
 import { PrConstructionObjectModule } from './pr-construction-object/pr-construction-object.module';
 import { PrConstructionTaskModule } from './pr-construction-task/pr-construction-task.module';
+import { PrProductivityModule } from './pr-productivity/pr-productivity.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { PrConstructionTaskModule } from './pr-construction-task/pr-construction
     PrPrevExpenseModule,
     PrConstructionObjectModule,
     PrConstructionTaskModule,
+    PrProductivityModule,
   ],
 })
 export class DataModule {}

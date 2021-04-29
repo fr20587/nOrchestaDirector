@@ -14,3 +14,15 @@ export const PosSchema = new Schema(
     versionKey: false,
   },
 );
+
+PosSchema.virtual('projectRef', {
+  ref: 'Project',
+  localField: 'projectID',
+  foreignField: '_id',
+});
+
+PosSchema.virtual('userRef', {
+  ref: 'User',
+  localField: 'user',
+  foreignField: '_id',
+});

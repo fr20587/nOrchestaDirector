@@ -1,7 +1,15 @@
-import { Pos } from '../entities/tbl6.entity';
-
 export class CreateTbl6Dto {
   user: string;
   projectID: string;
-  posS: Pos[];
+  year: number;
+  aci: number;
+  pos: string;
+  unit: string;
+  qty: number;
+  price: number;
+  value: number;
+  exp: number;
+  percentExp: number;
+  im: number;
+  percentIm: number;
 }

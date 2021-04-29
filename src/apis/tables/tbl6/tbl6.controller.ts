@@ -22,23 +22,16 @@ import { UpdateTbl6Dto } from './dto/update-tbl6.dto';
 export class Tbl6Controller {
   constructor(private readonly tbl6Service: Tbl6Service) {}
 
-  // Crear tabla 6
+  // Crear Producción o Servicio
   @Post('/')
   public async create(@Res() res, @Body() createTbl6Dto: CreateTbl6Dto) {
     try {
       const tbl6 = await this.tbl6Service.create(createTbl6Dto);
-      if (tbl6 === 'Ya existe la tabla 6 en este proyecto') {
-        return res.status(HttpStatus.CONFLICT).json({
-          ok: false,
-          tbl6,
-        });
-      } else {
-        return res.status(HttpStatus.CREATED).json({
-          ok: true,
-          message: 'Tabla 6 creada correctamente',
-          tbl6,
-        });
-      }
+      return res.status(HttpStatus.CREATED).json({
+        ok: true,
+        message: 'Producción o Servicio creado correctamente',
+        tbl6,
+      });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
@@ -48,7 +41,7 @@ export class Tbl6Controller {
     }
   }
 
-  // Obtener tabla 6
+  // Obtener Producción o Servicio
   @Get(':id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
@@ -73,7 +66,7 @@ export class Tbl6Controller {
     }
   }
 
-  // Actualizar tabla 6
+  // Actualizar Producción o Servicio
   @Patch(':id')
   public async update(
     @Res() res,
@@ -91,7 +84,7 @@ export class Tbl6Controller {
       } else {
         return res.status(HttpStatus.OK).json({
           ok: true,
-          message: 'Tabla 6 actualizada correctamente',
+          message: 'Producción o Servicio actualizado correctamente',
           updatedTbl6,
         });
       }
@@ -104,7 +97,7 @@ export class Tbl6Controller {
     }
   }
 
-  // Eliminar tabla 6
+  // Eliminar Producción o Servicio
   @Delete(':id')
   public async remove(@Res() res, @Param('id') id: string) {
     try {
