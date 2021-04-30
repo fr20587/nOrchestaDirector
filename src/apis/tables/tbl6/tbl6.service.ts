@@ -25,7 +25,10 @@ export class Tbl6Service {
 
   // Obtener tabla 6 por proyectos
   public async findOne(projectID: string) {
-    const tbl6 = await this.tbl6Model.find({ projectID });
+    const tbl6 = await this.tbl6Model
+      .find({ projectID })
+      .populate('pos', 'name price unit')
+      .populate('productivity', 'aci year');
     console.log(tbl6);
     return tbl6;
   }

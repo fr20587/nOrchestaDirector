@@ -7,6 +7,7 @@ export class UpdateTbl6Dto extends PartialType(CreateTbl6Dto) {
   year: number;
   aci: number;
   pos: string;
+  productivity: string;
   unit: string;
   qty: number;
   price: number;

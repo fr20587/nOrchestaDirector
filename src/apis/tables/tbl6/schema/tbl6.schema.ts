@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 
 export const Tbl6Schema = new Schema(
   {
-    aci: { type: Number, required: true, min: 0, max: 1 },
+    aci: { type: Number, required: true, min: 0, max: 3 },
     exp: { type: Number, required: true, min: 0 },
     im: { type: Number, required: true, min: 0 },
     percentExp: { type: Number, required: false, min: 0, max: 1 },
@@ -10,6 +10,11 @@ export const Tbl6Schema = new Schema(
     pos: { ref: 'Pos', type: Schema.Types.ObjectId, required: true },
     price: { type: Number, required: true, min: 0 },
     projectID: { ref: 'Project', type: Schema.Types.ObjectId, required: true },
+    productivity: {
+      ref: 'PrProductivity',
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
     qty: { type: Number, required: true, min: 0 },
     unit: { type: String, required: false },
     user: { ref: 'User', type: Schema.Types.ObjectId, required: true },
@@ -37,5 +42,11 @@ Tbl6Schema.virtual('userRef', {
 Tbl6Schema.virtual('posRef', {
   ref: 'Pos',
   localField: 'pos',
+  foreignField: '_id',
+});
+
+Tbl6Schema.virtual('productivityRef', {
+  ref: 'PrProductivity',
+  localField: 'productivity',
   foreignField: '_id',
 });

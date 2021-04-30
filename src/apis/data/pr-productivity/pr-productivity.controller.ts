@@ -80,7 +80,7 @@ export class PrProductivityController {
   }
 
   // Buscar productivdad por id
-  @Get(':id')
+  @Get('id/:id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
       const productivity = await this.prProductivityService.findOne(id);

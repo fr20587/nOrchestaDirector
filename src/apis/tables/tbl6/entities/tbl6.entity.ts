@@ -6,6 +6,7 @@ export class Tbl6 extends Document {
   readonly year: number;
   readonly aci: number;
   readonly pos: string;
+  readonly productivity: string;
   readonly unit: string;
   readonly qty: number;
   readonly price: number;
