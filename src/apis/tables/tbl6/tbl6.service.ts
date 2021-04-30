@@ -29,7 +29,6 @@ export class Tbl6Service {
       .find({ projectID })
       .populate('pos', 'name price unit')
       .populate('productivity', 'aci year');
-    console.log(tbl6);
     return tbl6;
   }
 

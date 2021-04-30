@@ -36,22 +36,27 @@ export class ProjectService {
   // Obtener todos los proyectos
   public async findAll() {
     // const projects = await this.projectModel.find();
-
     const [projects] = await Promise.all([
       this.projectModel
         .find({})
         .populate('client', 'name')
         .populate('person', 'name lastName')
+        .populate('place', 'name')
         .populate('service', 'name initials')
         .populate('user', 'name lastName'),
     ]);
-    console.log(projects);
     return projects;
   }
 
   // Obtener un proyecto
   public async findOne(id: string) {
-    const project = await this.projectModel.findById(id);
+    const project = await this.projectModel
+      .findById(id)
+      .populate('client', 'name')
+      .populate('person', 'name lastName')
+      .populate('place', 'name')
+      .populate('service', 'name initials')
+      .populate('user', 'name lastName');
     return project;
   }
 
