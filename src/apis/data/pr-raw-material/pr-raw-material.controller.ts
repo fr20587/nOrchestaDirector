@@ -98,7 +98,7 @@ export class PrRawMaterialController {
   }
 
   // Buscar una materia prima o insumo
-  @Get(':id')
+  @Get('/id/:id')
   public async findOne(@Res() res, @Param('id') id: string) {
     try {
       const rawMaterial = await this.rawMaterialService.findOne(id);

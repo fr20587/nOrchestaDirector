@@ -3,9 +3,10 @@ import { Schema } from 'mongoose';
 export const ProductivitySchema = new Schema(
   {
     aci: { type: Number, require: true, min: 0 },
+    index: { type: Number, require: true, min: 0 },
     projectID: { ref: 'Project', type: Schema.Types.ObjectId, require: true },
     user: { ref: 'User', type: Schema.Types.ObjectId, require: true },
-    year: { type: Number, require: true, min: 0 },
+    year: { type: Number, require: true, min: 0, max: 100 },
   },
   {
     versionKey: false,

@@ -6,7 +6,6 @@ export const PrRawMaterialSchema = new Schema(
     index: { type: Number, require: true },
     name: { type: String, require: true },
     origin: { type: String, require: true },
-    pos: [{ ref: 'Pos', type: Schema.Types.ObjectId }],
     projectID: { ref: 'Project', type: Schema.Types.ObjectId },
     supplier: { type: String, require: false },
     unit: { type: String, require: true },

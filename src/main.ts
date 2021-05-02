@@ -29,7 +29,7 @@ async function bootstrap() {
     .setTitle('n-OrchestaDirector')
     .setDescription('ATHENDAT API description')
     .setVersion('1.0')
-    .addTag('eAgroMarket')
+    .addTag('aEstudios')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -3,7 +3,6 @@ export class CreateRawMaterialDto {
   index: number;
   name: string;
   origin: string;
-  pos: string;
   projectID: string;
   supplier: string;
   unit: string;

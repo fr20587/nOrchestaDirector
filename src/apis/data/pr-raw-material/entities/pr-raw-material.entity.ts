@@ -5,7 +5,6 @@ export class PrRawMaterial extends Document {
   readonly index: number;
   readonly name: string;
   readonly origin: string;
-  readonly pos: string;
   readonly projectID: string;
   readonly sulpplier: string;
   readonly unit: string;

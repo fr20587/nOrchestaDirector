@@ -20,9 +20,7 @@ import { MiscModule } from './apis/misc/misc.module';
 
 import { ProjectsModule } from './apis/projects/projects.module';
 import { UsersModule } from './apis/users/users.module';
-import { Tbl6Module } from './apis/tables/tbl6/tbl6.module';
-import { LoggerMiddleware } from './apis/auth/middleware/logger.middleware';
-import { ProjectController } from './apis/projects/project/project.controller';
+import { TablesModule } from './apis/tables/tables.module';
 import { DataModule } from './apis/data/data.module';
 
 @Module({
@@ -40,14 +38,14 @@ import { DataModule } from './apis/data/data.module';
     ClientsModule,
     ProjectsModule,
     MiscModule,
-    Tbl6Module,
+    TablesModule,
     DataModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-/*   configure(consumer: MiddlewareConsumer) {
+  /*   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes(ProjectController);
   } */
 
